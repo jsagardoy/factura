@@ -8,15 +8,16 @@ import { Empresa } from '@core';
 
 interface TableProps {
     data: Empresa[];
+    updateState: (type: string, state: Empresa[], element: Empresa) => void;
 }
 
 export const EmpresaTableComponent: React.FC<TableProps> = props => {
-    const { data } = props;
+    const { data, updateState } = props;
     return (
         <Paper>
             <Table size="small" aria-label="a dense table">
                 <EmpresaTableHeaderComponent />
-                <EmpresaTableBodyComponent data={data} />
+                <EmpresaTableBodyComponent data={data} updateState={updateState} />
             </Table>
         </Paper>
     );

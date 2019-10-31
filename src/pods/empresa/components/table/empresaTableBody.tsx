@@ -10,10 +10,14 @@ import EditIcon from '@material-ui/icons/Edit';
 // tslint:disable-next-line: no-empty-interface
 interface EmpresaTableBodyProps {
     data: Empresa[];
+    updateState: (type: string, state: Empresa[], element: Empresa) => void;
 }
+//TBD this must be feeded with a form
 
 export const EmpresaTableBodyComponent: React.FC<EmpresaTableBodyProps> = (props: EmpresaTableBodyProps) => {
-    const { data } = props;
+    const { data, updateState } = props;
+    //const [list, setList] = React.useState<Empresa[]>(data);
+
     return (
         <TableBodyComponent>
             {data.map((item: Empresa) => (
@@ -25,21 +29,29 @@ export const EmpresaTableBodyComponent: React.FC<EmpresaTableBodyProps> = (props
                     <TableCell align="center">{item.localidad}</TableCell>
                     <TableCell align="center">{item.comunidad}</TableCell>
                     <TableCell align="center">{item.pais}</TableCell>
+                    <TableCell align="center">{item.iban}</TableCell>
                     <TableCell align="center">
-                        <IconButton ><DeleteIcon/></IconButton>
-                        <IconButton ><EditIcon/></IconButton>
+                        <IconButton
+                            onClick={e => {
+                                /*   const newState: Empresa[] = handleClickModify(item, newElement, list);
+                                setList(newState); */
+                                updateState('edit', data, item);
+                            }}
+                        >
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={e => {
+                                /* const newState: Empresa[(item, list);
+                                setList(newState); */
+                                updateState('delete', data, item);
+                            }}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
                     </TableCell>
                 </TableRow>
             ))}
         </TableBodyComponent>
     );
 };
-{
-    /* <TableCell align="center">Nombre</TableCell>
-        <TableCell align="center">NIF</TableCell>
-        <TableCell align="right">Dirección</TableCell>
-        <TableCell align="right">CP</TableCell>
-        <TableCell align="center">Localidad</TableCell>
-        <TableCell align="center">Comunidad</TableCell>
-        <TableCell align="center">Pais</TableCell> */
-}

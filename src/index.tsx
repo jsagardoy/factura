@@ -4,7 +4,7 @@ import { AppLayout } from '@layout';
 import LuxonUtils from '@date-io/luxon';
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { customTheme } from '../theme';
-import { EmisoresScene, ReceptoresScene, FacturaScene } from '@scenes';
+import { ReceptoresScene, FacturaScene, EmisoresScene } from '@scenes';
 
 ReactDOM.render(
     <>

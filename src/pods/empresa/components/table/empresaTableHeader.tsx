@@ -11,11 +11,12 @@ export const EmpresaTableHeaderComponent: React.FC<EmpresaTableHeaderProps> = pr
         <TableRow>
             <TableCell align="center">Nombre</TableCell>
             <TableCell align="center">NIF</TableCell>
-            <TableCell align="right">Dirección</TableCell>
-            <TableCell align="right">CP</TableCell>
+            <TableCell align="center">Dirección</TableCell>
+            <TableCell align="center">CP</TableCell>
             <TableCell align="center">Localidad</TableCell>
             <TableCell align="center">Comunidad</TableCell>
             <TableCell align="center">Pais</TableCell>
+            <TableCell align="center">IBAN</TableCell>
             <TableCell align="center">Acciones</TableCell>
         </TableRow>
     </TableHeaderComponent>
