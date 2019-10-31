@@ -5,8 +5,13 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { handleClickAdd, handleClickModify, handleClickRemove } from '@common-app';
 
-export const ReceptoresScene = () => {
+interface ReceptoresProps {
+    show: boolean;
+}
+
+export const ReceptoresScene: React.FC<ReceptoresProps> = props => {
     // TBD this must be feeded with a form
+    const { show } = props;
     const newElement: Empresa = {
         nombre: 'NuevaEmpresa',
         NIF: '55555555',
@@ -41,7 +46,7 @@ export const ReceptoresScene = () => {
     };
 
     return (
-        <div>
+        <div hidden={!show}>
             <h1>Receptores</h1>
             <EmpresaTableComponent data={receptoresList} updateState={updateState} />
             <Button

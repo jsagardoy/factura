@@ -9,6 +9,7 @@ import { Empresa } from '@core';
 interface TableProps {
     data: Empresa[];
     updateState: (type: string, state: Empresa[], element: Empresa) => void;
+   
 }
 
 export const EmpresaTableComponent: React.FC<TableProps> = props => {
