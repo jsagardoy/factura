@@ -21,7 +21,7 @@ export const EmpresaTableBodyComponent: React.FC<EmpresaTableBodyProps> = (props
     return (
         <TableBodyComponent>
             {data.map((item: Empresa) => (
-                <TableRow key={item.NIF}>
+                <TableRow  hover selected key={item.NIF}>
                     <TableCell align="center">{item.nombre}</TableCell>
                     <TableCell align="center">{item.NIF}</TableCell>
                     <TableCell align="center">{item.direccion}</TableCell>

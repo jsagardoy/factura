@@ -3,7 +3,7 @@ import { EmpresaTableComponent } from '@pods';
 import { emisoresData, Empresa } from '@core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import { handleClickAdd, handleClickModify } from '@common-app';
+import { handleClickAdd, handleClickModify, handleClickRemove } from '@common-app';
 
 export const EmisoresScene = () => {
     // TBD this must be feeded with a form
@@ -28,17 +28,15 @@ export const EmisoresScene = () => {
         iban: 'ML03D00890170001002120000447',
     };
 
-    const [emisoresList, setEmisoresList] = React.useState([...emisoresData]);
+    const [emisoresList, setEmisoresList] = React.useState(emisoresData);
     const updateState = (type: string, state: Empresa[], element: Empresa) => {
         switch (type) {
             case 'edit':
-                    setEmisoresList(handleClickModify(element, editElement, emisoresList ));
-
-                    break;
-                case 'delete':
-
-
-                    break;
+                setEmisoresList(handleClickModify(element, editElement, emisoresList));
+                break;
+            case 'delete':
+                setEmisoresList(handleClickRemove(element, emisoresList));
+                break;
         }
     };
     return (
