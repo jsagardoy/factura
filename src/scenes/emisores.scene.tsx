@@ -1,114 +1,17 @@
 import * as React from 'react';
 import { emisoresData, Empresa } from '@core';
-
-import { handleClickAdd, handleClickModify, handleClickRemove } from '@common-app';
-import MaterialTable, { Column } from 'material-table';
-import { FormLabel } from '@material-ui/core';
-
-interface EmisoresProps {
-    handleShowReceptores: () => void;
-}
+import { Column } from 'material-table';
+import { TableComponent } from '@pods';
+import { columnsEmpresa } from '@common-app';
 
 export const EmisoresScene = () => {
-    // TBD this must be feeded with a form
-
-    //const [emisoresList, setEmisoresList] = React.useState(emisoresData);
-
-    // new
     interface TableState {
         columns: Array<Column<Empresa>>;
         data: Empresa[];
     }
     const [state, setState] = React.useState<TableState>({
-        columns: [
-            { title: 'Nombre', field: 'nombre' },
-            { title: 'NIF', field: 'NIF' },
-            { title: 'Dirección', field: 'direccion' },
-            { title: 'CP', field: 'CP' },
-            { title: 'Localidad', field: 'localidad' },
-            { title: 'Comunidad', field: 'comunidad' },
-            { title: 'Pais', field: 'pais' },
-            { title: 'IBAN', field: 'iban' },
-        ],
+        columns: columnsEmpresa,
         data: emisoresData,
     });
-    return (
-        <MaterialTable
-            localization={{
-                header: {
-                    actions: 'Acciones',
-                },
-                body: {
-                    emptyDataSourceMessage: 'No hay elementos para',
-                    addTooltip: 'Añadir',
-                    deleteTooltip: 'Eliminar',
-                    editTooltip: 'Editar',
-                    editRow: {
-                        deleteText: '¿Está segudo de que quiere eliminar esta fila?',
-                        cancelTooltip: 'Cancelar',
-                        saveTooltip: 'Guardar',
-                    },
-                },
-                pagination: {
-                    labelDisplayedRows: '{from}-{to} de {count}',
-                    labelRowsSelect: 'Registros',
-                    labelRowsPerPage: 'Registros por página',
-                    firstAriaLabel: 'Primera página',
-                    firstTooltip: 'Primera página',
-                    previousAriaLabel: 'Anterior',
-                    previousTooltip: 'Página anterior',
-                    nextAriaLabel: 'Siguiente',
-                    nextTooltip: 'Página siguiente',
-                    lastAriaLabel: 'Última',
-                    lastTooltip: 'Última siguiente',
-                },
-                toolbar: {
-                    searchPlaceholder: 'Buscar',
-                    searchTooltip: 'Buscar',
-                },
-            }}
-            title="Emisores"
-            columns={state.columns}
-            data={state.data}
-            editable={{
-                onRowAdd: newData =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            setState(prevState => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
-                        }, 600);
-                    }),
-                onRowUpdate: (newData, oldData) =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            if (oldData) {
-                                setState(prevState => {
-                                    const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
-                                    const data = [...prevState.data];
-                                    data.splice(pos, 1, newData);
-                                    return { ...prevState, data };
-                                });
-                            }
-                        }, 600);
-                    }),
-                onRowDelete: oldData =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            setState(prevState => {
-                                const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
-                                const data = [...prevState.data];
-                                data.splice(pos, 1);
-                                return { ...prevState, data };
-                            });
-                        }, 600);
-                    }),
-            }}
-        />
-    );
+    return <TableComponent title="Emisores" data={state.data} columns={state.columns} />;
 };

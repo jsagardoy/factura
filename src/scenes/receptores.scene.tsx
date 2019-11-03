@@ -1,53 +1,18 @@
 import * as React from 'react';
 import { receptoresData, Empresa } from '@core';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import { handleClickAdd, handleClickModify, handleClickRemove } from '@common-app';
+import { Column } from 'material-table';
+import { TableComponent } from '@pods';
+import { columnsEmpresa } from '@common-app';
 
-interface ReceptoresProps {
-    show: boolean;
-}
 
-export const ReceptoresScene: React.FC<ReceptoresProps> = props => {
-    // TBD this must be feeded with a form
-    const { show } = props;
-    const newElement: Empresa = {
-        nombre: 'NuevaEmpresa',
-        NIF: '55555555',
-        direccion: 'C\\ Luis Cabrera, 9, 2º C',
-        CP: 28030,
-        localidad: 'Madrid',
-        comunidad: 'Madrid',
-        pais: 'España',
-        iban: 'ML03D00890170001002120000447',
-    };
-    const editElement: Empresa = {
-        nombre: 'Empresa reemplazada',
-        NIF: '55555555',
-        direccion: 'C\\ Luis Cabrera, 9, 2º C',
-        CP: 28030,
-        localidad: 'Madrid',
-        comunidad: 'Madrid',
-        pais: 'España',
-        iban: 'ML03D00890170001002120000447',
-    };
-
-    const [receptoresList, setReceptoresList] = React.useState(receptoresData);
-    const updateState = (type: string, state: Empresa[], element: Empresa) => {
-        switch (type) {
-            case 'edit':
-                setReceptoresList(handleClickModify(element, editElement, receptoresList));
-                break;
-            case 'delete':
-                setReceptoresList(handleClickRemove(element, receptoresList));
-                break;
-        }
-    };
-
-    return (
-        <div hidden={!show}>
-            <h1>Receptores</h1>
-            
-        </div>
-    );
+export const ReceptoresScene = () => {
+    interface TableState {
+        columns: Array<Column<Empresa>>;
+        data: Empresa[];
+    }
+    const [state, setState] = React.useState<TableState>({
+        columns: columnsEmpresa,
+        data: receptoresData,
+    });
+    return <TableComponent title="Receptores" data={state.data} columns={state.columns} />;
 };

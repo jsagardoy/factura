@@ -1,13 +1,10 @@
 import * as React from 'react';
 
-interface FacturaProps {
-    show: boolean;
-}
-export const FacturaScene: React.FC<FacturaProps> = props => {
-    const { show } = props;
+interface FacturaProps{}
 
+export const FacturaScene: React.FC<FacturaProps> = props => {
     return (
-        <div hidden={!show}>
+        <div>
             <h1>Factura</h1>
         </div>
     );

@@ -7,11 +7,6 @@ interface TableProps {
 }
 export const TableComponent: React.FC<TableProps> = props => {
     const { columns, data, title } = props;
-    /*
-    interface TableState {
-        columns: Array<Column<any>>;
-        data: any[];
-    } */
     const [state, setState] = React.useState({
         columns,
         data,
@@ -66,15 +61,16 @@ export const TableComponent: React.FC<TableProps> = props => {
                             });
                         }, 600);
                     }),
-                onRowUpdate: (newData, oldData) =>
+                    onRowUpdate: (newData, oldData) =>
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
                             if (oldData) {
                                 setState(prevState => {
-                                    const oldData = [...prevState.data];
-                                    oldData.splice(prevState.data.indexOf(oldData), 1, newData);
-                                    return { ...prevState, data };
+                                    const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
+                                    const newArray = [...prevState.data];
+                                    data.splice(pos, 1, newData);
+                                    return { ...prevState, newArray };
                                 });
                             }
                         }, 600);
@@ -84,9 +80,10 @@ export const TableComponent: React.FC<TableProps> = props => {
                         setTimeout(() => {
                             resolve();
                             setState(prevState => {
-                                const oldData = [...prevState.data];
-                                oldData.splice(prevState.data.indexOf(oldData), 1);
-                                return { ...prevState, data };
+                                const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
+                                const newArray = [...prevState.data];
+                                data.splice(pos, 1);
+                                return { ...prevState, newArray };
                             });
                         }, 600);
                     }),
