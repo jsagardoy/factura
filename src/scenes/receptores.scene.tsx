@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { EmpresaTableComponent } from '@pods';
 import { receptoresData, Empresa } from '@core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -48,16 +47,7 @@ export const ReceptoresScene: React.FC<ReceptoresProps> = props => {
     return (
         <div hidden={!show}>
             <h1>Receptores</h1>
-            <EmpresaTableComponent data={receptoresList} updateState={updateState} />
-            <Button
-                onClick={e => {
-                    setReceptoresList([...handleClickAdd(newElement, receptoresList)]);
-                }}
-                variant="contained"
-                startIcon={<AddIcon />}
-            >
-                Añadir
-            </Button>
+            
         </div>
     );
 };

@@ -1,36 +1,20 @@
 import * as React from 'react';
-import { emisoresData, Empresa } from '@core';
-
-import { handleClickAdd, handleClickModify, handleClickRemove } from '@common-app';
 import MaterialTable, { Column } from 'material-table';
-import { FormLabel } from '@material-ui/core';
-
-interface EmisoresProps {
-    handleShowReceptores: () => void;
+interface TableProps {
+    columns: Array<Column<any>>;
+    data: any[];
+    title: string;
 }
-
-export const EmisoresScene = () => {
-    // TBD this must be feeded with a form
-
-    //const [emisoresList, setEmisoresList] = React.useState(emisoresData);
-
-    // new
+export const TableComponent: React.FC<TableProps> = props => {
+    const { columns, data, title } = props;
+    /*
     interface TableState {
-        columns: Array<Column<Empresa>>;
-        data: Empresa[];
-    }
-    const [state, setState] = React.useState<TableState>({
-        columns: [
-            { title: 'Nombre', field: 'nombre' },
-            { title: 'NIF', field: 'NIF' },
-            { title: 'Dirección', field: 'direccion' },
-            { title: 'CP', field: 'CP' },
-            { title: 'Localidad', field: 'localidad' },
-            { title: 'Comunidad', field: 'comunidad' },
-            { title: 'Pais', field: 'pais' },
-            { title: 'IBAN', field: 'iban' },
-        ],
-        data: emisoresData,
+        columns: Array<Column<any>>;
+        data: any[];
+    } */
+    const [state, setState] = React.useState({
+        columns,
+        data,
     });
     return (
         <MaterialTable
@@ -67,7 +51,7 @@ export const EmisoresScene = () => {
                     searchTooltip: 'Buscar',
                 },
             }}
-            title="Emisores"
+            title={title}
             columns={state.columns}
             data={state.data}
             editable={{
@@ -76,9 +60,9 @@ export const EmisoresScene = () => {
                         setTimeout(() => {
                             resolve();
                             setState(prevState => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
+                                const oldData = [...prevState.data];
+                                oldData.push(newData);
+                                return { ...prevState, oldData };
                             });
                         }, 600);
                     }),
@@ -88,9 +72,8 @@ export const EmisoresScene = () => {
                             resolve();
                             if (oldData) {
                                 setState(prevState => {
-                                    const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
-                                    const data = [...prevState.data];
-                                    data.splice(pos, 1, newData);
+                                    const oldData = [...prevState.data];
+                                    oldData.splice(prevState.data.indexOf(oldData), 1, newData);
                                     return { ...prevState, data };
                                 });
                             }
@@ -101,9 +84,8 @@ export const EmisoresScene = () => {
                         setTimeout(() => {
                             resolve();
                             setState(prevState => {
-                                const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
-                                const data = [...prevState.data];
-                                data.splice(pos, 1);
+                                const oldData = [...prevState.data];
+                                oldData.splice(prevState.data.indexOf(oldData), 1);
                                 return { ...prevState, data };
                             });
                         }, 600);
