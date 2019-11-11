@@ -1,5 +1,7 @@
 import * as React from 'react';
 import MaterialTable, { Column } from 'material-table';
+import { positions } from '@material-ui/system';
+import { Tooltip } from '@material-ui/core';
 interface TableProps {
     columns: Array<Column<any>>;
     data: any[];
@@ -46,6 +48,9 @@ export const TableComponent: React.FC<TableProps> = props => {
                     searchTooltip: 'Buscar',
                 },
             }}
+            options={{
+                actionsColumnIndex: -1,
+              }}
             title={title}
             columns={state.columns}
             data={state.data}
@@ -61,7 +66,7 @@ export const TableComponent: React.FC<TableProps> = props => {
                             });
                         }, 600);
                     }),
-                    onRowUpdate: (newData, oldData) =>
+                onRowUpdate: (newData, oldData) =>
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();

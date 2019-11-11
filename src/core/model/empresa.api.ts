@@ -1,4 +1,5 @@
 export interface Empresa {
+    selected: boolean;
     nombre: string;
     NIF: string;
     direccion: string;
@@ -26,6 +27,7 @@ export interface Factura {
 
 export const emisoresData: Empresa[] = [
            {
+               selected: false,
                nombre: 'empresa1',
                NIF: '123456789',
                direccion: 'C\\ Martín Carpena, 2, 1º C',
@@ -36,6 +38,7 @@ export const emisoresData: Empresa[] = [
                iban: 'ML03D00890170001002120000447',
            },
            {
+               selected: false,
                nombre: 'empresa2',
                NIF: '987654321',
                direccion: 'Avenida de la Diputación 22, 8ºC',
@@ -48,6 +51,7 @@ export const emisoresData: Empresa[] = [
        ];
 export const receptoresData: Empresa[] = [
            {
+               selected: false,
                nombre: 'El corte inglés',
                NIF: '9999999',
                direccion: 'C\\ Princesa, 1',
@@ -58,6 +62,7 @@ export const receptoresData: Empresa[] = [
                iban: 'ML03D00890170001002120000447',
            },
            {
+               selected: false,
                nombre: 'Fnac',
                NIF: '1111111',
                direccion: 'Plaza de Callao, 20',
