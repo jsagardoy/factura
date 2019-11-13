@@ -26,7 +26,6 @@ export const EmisoresScene: React.FC = () => {
         data: emisoresData,
     });
 
-    React.useEffect(() => console.log(`aaaa` + JSON.stringify(emisores.data)), [emisores]);
 
     const selection = (dataRow: Empresa) => (
         <Checkbox
@@ -36,13 +35,7 @@ export const EmisoresScene: React.FC = () => {
         />
     );
 
-    /* const isChecked = (NIF: string, data:Empresa[]) => {
-        const newData = [...data];
-        const value: Empresa = newData.find((item: Empresa) => item.NIF === NIF && item.selected === true);
 
-        return value ? true : false;
-    };
- */
     const isDisabled = (): boolean => {
         const newArray = [...emisores.data];
         const res = newArray.find(item => item.selected === true);
