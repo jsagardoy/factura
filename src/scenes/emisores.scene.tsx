@@ -25,7 +25,8 @@ export const EmisoresScene: React.FC = () => {
         columns: columnsEmpresa,
         data: emisoresData,
     });
-    React.useEffect(() => console.log(`aaaa` + emisores.data), [emisores]);
+
+    React.useEffect(() => console.log(`aaaa` + JSON.stringify(emisores.data)), [emisores]);
 
     const selection = (dataRow: Empresa) => (
         <Checkbox
@@ -49,10 +50,9 @@ export const EmisoresScene: React.FC = () => {
     };
 
     const handleCheck = (empresa: Empresa) => {
-        
         const rest: Empresa[] = emisores.data.map((item: Empresa) => {
             if (item.NIF === empresa.NIF) {
-                const newItem = { ...item, selected: !item.selected };
+                const newItem = { ...empresa, selected: !empresa.selected };
                 return newItem;
             } else {
                 return item;
