@@ -41,5 +41,5 @@ export const ReceptoresScene = () => {
         data: Empresa[];
     }
 
-    return <TableComponent title="Receptores" data={state.data} columns={state.columns} />;
+    return //<TableComponent title="Receptores" data={state.data} columns={state.columns} />;
 };

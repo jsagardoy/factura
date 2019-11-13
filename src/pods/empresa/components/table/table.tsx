@@ -6,13 +6,10 @@ interface TableProps {
     columns: Array<Column<any>>;
     data: any[];
     title: string;
+    setTable:(value)=>void;
 }
 export const TableComponent: React.FC<TableProps> = props => {
-    const { columns, data, title } = props;
-    const [state, setState] = React.useState({
-        columns,
-        data,
-    });
+       
     return (
         <MaterialTable
             localization={{
@@ -51,15 +48,15 @@ export const TableComponent: React.FC<TableProps> = props => {
             options={{
                 actionsColumnIndex: -1,
               }}
-            title={title}
-            columns={state.columns}
-            data={state.data}
+            title={props.title}
+            columns={props.columns}
+            data={props.data}
             editable={{
                 onRowAdd: newData =>
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            setState(prevState => {
+                            props.setTable(prevState => {
                                 const oldData = [...prevState.data];
                                 oldData.push(newData);
                                 return { ...prevState, oldData };
@@ -71,10 +68,10 @@ export const TableComponent: React.FC<TableProps> = props => {
                         setTimeout(() => {
                             resolve();
                             if (oldData) {
-                                setState(prevState => {
+                                props.setTable(prevState => {
                                     const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
                                     const newArray = [...prevState.data];
-                                    data.splice(pos, 1, newData);
+                                    props.data.splice(pos, 1, newData);
                                     return { ...prevState, newArray };
                                 });
                             }
@@ -84,10 +81,10 @@ export const TableComponent: React.FC<TableProps> = props => {
                     new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                            setState(prevState => {
+                            props.setTable(prevState => {
                                 const pos = prevState.data.map((item, i) => (item.NIF === oldData.NIF ? i : -1))[0];
                                 const newArray = [...prevState.data];
-                                data.splice(pos, 1);
+                                props.data.splice(pos, 1);
                                 return { ...prevState, newArray };
                             });
                         }, 600);

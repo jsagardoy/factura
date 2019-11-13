@@ -9,7 +9,7 @@ export const EmisoresScene: React.FC = () => {
         {
             title: 'Selected',
             field: 'selected',
-            render: dataRow => selection({ ...dataRow }),
+            render: ((dataRow)=>selection(dataRow))
         },
         { title: 'Nombre', field: 'nombre' },
         { title: 'NIF', field: 'NIF' },
@@ -22,26 +22,26 @@ export const EmisoresScene: React.FC = () => {
     ];
 
     const [emisores, setEmisores] = React.useState<TableState>({
-        columns: [...columnsEmpresa],
-        data: [...emisoresData],
+        columns: columnsEmpresa,
+        data: emisoresData,
     });
-    React.useEffect(() => console.log(`aaaa` + emisores), [emisores]);
+    React.useEffect(() => console.log(`aaaa` + emisores.data), [emisores]);
 
     const selection = (dataRow: Empresa) => (
         <Checkbox
-            checked={isChecked(dataRow)}
+            checked={dataRow.selected}
             //disabled={dataRow.selected && isDisabled()}
             onChange={e => handleCheck(dataRow)}
         />
     );
 
-    const isChecked = (dataRow: Empresa) => {
-        const data = [...emisores.data];
-        const value: Empresa = data.find((item: Empresa) => item.NIF === dataRow.NIF && item.selected === true);
+    /* const isChecked = (NIF: string, data:Empresa[]) => {
+        const newData = [...data];
+        const value: Empresa = newData.find((item: Empresa) => item.NIF === NIF && item.selected === true);
 
         return value ? true : false;
     };
-
+ */
     const isDisabled = (): boolean => {
         const newArray = [...emisores.data];
         const res = newArray.find(item => item.selected === true);
@@ -49,8 +49,8 @@ export const EmisoresScene: React.FC = () => {
     };
 
     const handleCheck = (empresa: Empresa) => {
-        const newData = [...emisores.data];
-        const rest: Empresa[] = newData.map((item: Empresa) => {
+        
+        const rest: Empresa[] = emisores.data.map((item: Empresa) => {
             if (item.NIF === empresa.NIF) {
                 const newItem = { ...item, selected: !item.selected };
                 return newItem;
@@ -58,7 +58,7 @@ export const EmisoresScene: React.FC = () => {
                 return item;
             }
         });
-        setEmisores({ ...emisores, data: rest });
+        setEmisores({ ...emisores, data: rest }); 
     };
 
     interface TableState {
@@ -66,5 +66,5 @@ export const EmisoresScene: React.FC = () => {
         data: Empresa[];
     }
 
-    return <TableComponent title="Emisores" data={emisores.data} columns={emisores.columns} />;
+    return <TableComponent title="Emisores" data={emisores.data} columns={emisores.columns} setTable={setEmisores}/>;
 };

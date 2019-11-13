@@ -10,7 +10,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     return (
         <AppLayout>
             <EmisoresScene />
-            <ReceptoresScene/>
+            {/* <ReceptoresScene/> */}
             <FacturaScene/>
         </AppLayout>
     );
