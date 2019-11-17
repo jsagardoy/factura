@@ -8,6 +8,7 @@ export interface Empresa {
     comunidad: string;
     pais: string;
     iban: string;
+    disabled:boolean;
 }
 export interface Factura {
     id: string;
@@ -36,6 +37,7 @@ export const emisoresData: Empresa[] = [
                comunidad: 'Madrid',
                pais: 'España',
                iban: 'ML03D00890170001002120000447',
+               disabled: false,
            },
            {
                selected: false,
@@ -47,6 +49,7 @@ export const emisoresData: Empresa[] = [
                comunidad: 'Cádiz',
                pais: 'España',
                iban: 'ML03D00890170001002120000447',
+               disabled: false,
            },
        ];
 export const receptoresData: Empresa[] = [
@@ -60,6 +63,7 @@ export const receptoresData: Empresa[] = [
                comunidad: 'Madrid',
                pais: 'España',
                iban: 'ML03D00890170001002120000447',
+               disabled: false,
            },
            {
                selected: false,
@@ -71,5 +75,6 @@ export const receptoresData: Empresa[] = [
                comunidad: 'Madrid',
                pais: 'España',
                iban: 'ML03D00890170001002120000447',
+               disabled: false,
            },
        ];
