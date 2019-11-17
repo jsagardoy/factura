@@ -9,7 +9,7 @@ export const EmisoresScene: React.FC = () => {
         {
             title: 'Selected',
             field: 'selected',
-            render: ((dataRow)=>selection(dataRow))
+            render: dataRow => selectionCheckBox(dataRow),
         },
         { title: 'Nombre', field: 'nombre' },
         { title: 'NIF', field: 'NIF' },
@@ -26,32 +26,23 @@ export const EmisoresScene: React.FC = () => {
         data: emisoresData,
     });
 
-
-    const selection = (dataRow: Empresa) => (
+    const selectionCheckBox = (dataRow: Empresa) => (
         <Checkbox
             checked={dataRow.selected}
-            //disabled={dataRow.selected && isDisabled()}
+            disabled={dataRow.disabled && !dataRow.selected}
             onChange={e => handleCheck(dataRow)}
         />
     );
 
-
-    const isDisabled = (): boolean => {
-        const newArray = [...emisores.data];
-        const res = newArray.find(item => item.selected === true);
-        return res ? true : false;
-    };
-
     const handleCheck = (empresa: Empresa) => {
         const rest: Empresa[] = emisores.data.map((item: Empresa) => {
             if (item.NIF === empresa.NIF) {
-                const newItem = { ...empresa, selected: !empresa.selected };
-                return newItem;
+                return { ...empresa, selected: !empresa.selected, disabled: !empresa.disabled };
             } else {
-                return item;
+                return { ...item, disabled: !empresa.disabled };
             }
         });
-        setEmisores({ ...emisores, data: rest }); 
+        setEmisores({ ...emisores, data: rest });
     };
 
     interface TableState {
@@ -59,5 +50,5 @@ export const EmisoresScene: React.FC = () => {
         data: Empresa[];
     }
 
-    return <TableComponent title="Emisores" data={emisores.data} columns={emisores.columns} setTable={setEmisores}/>;
+    return <TableComponent title="Emisores" data={emisores.data} columns={emisores.columns} setTable={setEmisores} />;
 };
