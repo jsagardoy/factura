@@ -9,7 +9,7 @@ export const EmisoresScene: React.FC = () => {
         {
             title: 'Selected',
             field: 'selected',
-            render: dataRow => selectionCheckBox(dataRow),
+            render: dataRow => selectionCheckBoxColumn(dataRow),
         },
         { title: 'Nombre', field: 'nombre' },
         { title: 'NIF', field: 'NIF' },
@@ -26,15 +26,15 @@ export const EmisoresScene: React.FC = () => {
         data: emisoresData,
     });
 
-    const selectionCheckBox = (dataRow: Empresa) => (
+    const selectionCheckBoxColumn = (dataRow: Empresa) => (
         <Checkbox
             checked={dataRow.selected}
             disabled={dataRow.disabled && !dataRow.selected}
-            onChange={e => handleCheck(dataRow)}
+            onChange={e => handleCheckSelectionColumn(dataRow)}
         />
     );
 
-    const handleCheck = (empresa: Empresa) => {
+    const handleCheckSelectionColumn = (empresa: Empresa) => {
         const rest: Empresa[] = emisores.data.map((item: Empresa) => {
             if (item.NIF === empresa.NIF) {
                 return { ...empresa, selected: !empresa.selected, disabled: !empresa.disabled };

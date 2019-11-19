@@ -4,12 +4,12 @@ import { Column } from 'material-table';
 import { TableComponent } from '@pods';
 import Checkbox from '@material-ui/core/Checkbox/Checkbox';
 
-export const ReceptoresScene = () => {
+export const ReceptoresScene: React.FC = () => {
     const columnsEmpresa = [
         {
             title: 'Selected',
             field: 'selected',
-            render: dataRow => <Checkbox checked={dataRow.selected} onChange={e => handleCheck(dataRow)} />,
+            render: dataRow => selectionCheckBoxColumn(dataRow),
         },
         { title: 'Nombre', field: 'nombre' },
         { title: 'NIF', field: 'NIF' },
@@ -21,25 +21,34 @@ export const ReceptoresScene = () => {
         { title: 'IBAN', field: 'iban' },
     ];
 
-    const [state, setState] = React.useState<TableState>({
+    const [receptores, setReceptores] = React.useState<TableState>({
         columns: columnsEmpresa,
         data: receptoresData,
     });
-    const handleCheck = (empresa: Empresa) => {
-        const newData = [...state.data];
-        const rest = newData.map(item => {
+
+    const selectionCheckBoxColumn = (dataRow: Empresa) => (
+        <Checkbox
+            checked={dataRow.selected}
+            disabled={dataRow.disabled && !dataRow.selected}
+            onChange={e => handleCheckSelectionColumn(dataRow)}
+        />
+    );
+
+    const handleCheckSelectionColumn = (empresa: Empresa) => {
+        const rest: Empresa[] = receptores.data.map((item: Empresa) => {
             if (item.NIF === empresa.NIF) {
-                return { ...item, selected: !empresa.selected };
+                return { ...empresa, selected: !empresa.selected, disabled: !empresa.disabled };
             } else {
-                return item;
+                return { ...item, disabled: !empresa.disabled };
             }
         });
-        setState({ ...state, data: rest });
+        setReceptores({ ...receptores, data: rest });
     };
+
     interface TableState {
         columns: Column<Empresa>[];
         data: Empresa[];
     }
 
-    return //<TableComponent title="Receptores" data={state.data} columns={state.columns} />;
+    return <TableComponent title="Receptores" data={receptores.data} columns={receptores.columns} setTable={setReceptores} />;
 };
