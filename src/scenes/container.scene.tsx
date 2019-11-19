@@ -6,27 +6,29 @@ import { emisoresData, receptoresData, Empresa } from '@core';
 interface MainContainerProps {}
 
 export const MainContainer: React.FC<MainContainerProps> = props => {
-    const [emisor, setEmisor] = React.useState();
-    const [receptor, setReceptor] = React.useState();
-    const SelectedValue = (value:Empresa, actionType:string) =>{
+    const [emisor, setEmisor] = React.useState<Empresa>();
+    const [receptor, setReceptor] = React.useState<Empresa>();
+    
+    const selectedRow = (dataRow:Empresa, actionType:string) =>{
         switch (actionType){
             case "Emisor":
-                setEmisor(value);
+                setEmisor(dataRow);
             break;
             case "Receptor":
-                setReceptor(value);    
+                setReceptor(dataRow);    
             break;
         }
       
     }
+    //TO BE CHANGED, JUST FOR TESTING PURPOSE
     React.useEffect(()=>{
         console.log('emisor'+ JSON.stringify(emisor));
-        console.log('receptor'+ receptor);
+        console.log('receptor'+ JSON.stringify(receptor));
     })
     return (
         <AppLayout>
-            <EmpresaTablaScene title="Emisor" data={emisoresData} selectedValue={SelectedValue}/>
-            <EmpresaTablaScene title="Receptor" data={receptoresData} selectedValue={SelectedValue}/>
+            <EmpresaTablaScene title="Emisor" data={emisoresData} selectedRow={selectedRow}/>
+            <EmpresaTablaScene title="Receptor" data={receptoresData} selectedRow={selectedRow}/>
             <FacturaScene/>
         </AppLayout>
     );
