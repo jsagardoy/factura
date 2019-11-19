@@ -1,10 +1,16 @@
 import * as React from 'react';
-import { emisoresData, Empresa } from '@core';
+import { Empresa } from '@core';
 import { Column } from 'material-table';
 import { TableComponent } from '@pods';
 import Checkbox from '@material-ui/core/Checkbox/Checkbox';
 
-export const EmisoresScene: React.FC = () => {
+interface EmpresaTablasProps{
+    title: string;
+    data: Empresa[];
+}
+
+export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = (props) => {
+    const {data, title} = props;
     const columnsEmpresa = [
         {
             title: 'Selected',
@@ -21,9 +27,9 @@ export const EmisoresScene: React.FC = () => {
         { title: 'IBAN', field: 'iban' },
     ];
 
-    const [emisores, setEmisores] = React.useState<TableState>({
+    const [values, setValues] = React.useState<TableState>({
         columns: columnsEmpresa,
-        data: emisoresData,
+        data: data,
     });
 
     const selectionCheckBoxColumn = (dataRow: Empresa) => (
@@ -35,14 +41,14 @@ export const EmisoresScene: React.FC = () => {
     );
 
     const handleCheckSelectionColumn = (empresa: Empresa) => {
-        const rest: Empresa[] = emisores.data.map((item: Empresa) => {
+        const rest: Empresa[] = values.data.map((item: Empresa) => {
             if (item.NIF === empresa.NIF) {
                 return { ...empresa, selected: !empresa.selected, disabled: !empresa.disabled };
             } else {
                 return { ...item, disabled: !empresa.disabled };
             }
         });
-        setEmisores({ ...emisores, data: rest });
+        setValues({ ...values, data: rest });
     };
 
     interface TableState {
@@ -50,5 +56,5 @@ export const EmisoresScene: React.FC = () => {
         data: Empresa[];
     }
 
-    return <TableComponent title="Emisores" data={emisores.data} columns={emisores.columns} setTable={setEmisores} />;
+    return <TableComponent title={title} data={values.data} columns={values.columns} setTable={setValues} />;
 };

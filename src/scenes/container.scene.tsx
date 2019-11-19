@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { AppLayout } from '@layout';
-import { EmisoresScene, ReceptoresScene, FacturaScene } from '@scenes';
+import { EmpresaTablaScene, ReceptoresScene, FacturaScene } from '@scenes';
+import { emisoresData, receptoresData } from '@core';
 
 interface MainContainerProps {}
 
 export const MainContainer: React.FC<MainContainerProps> = props => {
-    const [showReceptores, setShowReceptores] = React.useState(false);
-    const [showFactura, setShowFactura] = React.useState(false);
     return (
         <AppLayout>
-            <EmisoresScene />
-            <ReceptoresScene/>
+            <EmpresaTablaScene title="Emisor" data={emisoresData} />
+            <EmpresaTablaScene title="Receptor" data={receptoresData} />
             <FacturaScene/>
         </AppLayout>
     );
