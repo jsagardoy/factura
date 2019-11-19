@@ -7,10 +7,11 @@ import Checkbox from '@material-ui/core/Checkbox/Checkbox';
 interface EmpresaTablasProps{
     title: string;
     data: Empresa[];
+    selectedValue: (value:Empresa, actionType: string) => void;
 }
 
 export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = (props) => {
-    const {data, title} = props;
+    const {data, title, selectedValue} = props;
     const columnsEmpresa = [
         {
             title: 'Selected',
@@ -49,6 +50,7 @@ export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = (props) => {
             }
         });
         setValues({ ...values, data: rest });
+        selectedValue(rest.find((item:Empresa)=>item.selected===true), title);
     };
 
     interface TableState {
