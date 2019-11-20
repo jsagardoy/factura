@@ -25,6 +25,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         console.log('emisor'+ JSON.stringify(emisor));
         console.log('receptor'+ JSON.stringify(receptor));
     })
+    
     return (
         <AppLayout>
             <EmpresaTablaScene title="Emisor" data={emisoresData} selectedRow={selectedRow}/>
