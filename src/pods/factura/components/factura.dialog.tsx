@@ -10,12 +10,13 @@ import { FacturaForm } from './factura.form';
 
 interface FacturaFormProps {
     handleInputChange: (fieldName: String, value: string | number | Date) => void;
+    /* handleInputSave: (fieldName: String, value: string | number | Date) => void; */
     disabled: boolean;
 }
 
 export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
     const [open, setOpen] = React.useState(false);
-    const { handleInputChange, disabled } = props;
+    const { handleInputChange, disabled/* , handleInputSave */ } = props;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -38,10 +39,10 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        Cancel
+                        Cancelar
                     </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Subscribe
+                    <Button onClick={handleClose/* (e)=>handleInputSave */} color="primary">
+                        OK
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppLayout } from '@layout';
-import { EmpresaTablaScene, ReceptoresScene, FacturaScene } from '@scenes';
+import { EmpresaTablaScene, FacturaScene } from '@scenes';
 import { emisoresData, receptoresData, Empresa, Factura } from '@core';
 
 interface MainContainerProps {}
@@ -10,7 +10,6 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const [receptor, setReceptor] = React.useState<Empresa>();
     const [factura, setFactura] = React.useState<Factura>();
     const [disabled, setDisabled] = React.useState<boolean>(true);
-
     const selectedRow = (dataRow: Empresa, actionType: string) => {
         switch (actionType) {
             case 'Emisor':
@@ -23,10 +22,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     };
     //TO BE CHANGED, JUST FOR TESTING PURPOSE
     React.useEffect(() => {
-        console.log('emisor' + JSON.stringify(emisor));
-        console.log('receptor' + JSON.stringify(receptor));
         isDisabled();
-        console.log(disabled);
     });
 
     const handleInputChange = (id: string, value: string | number | Date) => {
@@ -36,13 +32,19 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         if (emisor && receptor) setDisabled(!emisor.selected && !receptor.selected);
         else setDisabled(true);
     };
-    const generateIDFactura = (year: number) =>{
-        
-    }
+    const generateIDFactura = (year: number, facturasList: Factura[]): number => {
+        if (facturasList) {
+            const facturasAnualesOredenadas = facturasList
+                .filter(factura => factura.año === year)
+                .sort((a, b) => (a.id > b.id ? 1 : -1));
+            const lastFactura = facturasAnualesOredenadas[facturasAnualesOredenadas.length - 1];
+            return lastFactura.id + 1;
+        } else return 1;
+    };
 
-    const fillFactura = () =>{
-        const newFactura =  {...factura, emisor:emisor, receptor:receptor};
-    }
+    const fillFactura = () => {
+        const newFactura = { ...factura, emisor: emisor, receptor: receptor, id: generateIDFactura(factura.id, []) };
+    };
     return (
         <AppLayout>
             <EmpresaTablaScene title="Emisor" data={emisoresData} selectedRow={selectedRow} />

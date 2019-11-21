@@ -11,7 +11,7 @@ export interface Empresa {
     disabled:boolean;
 }
 export interface Factura {
-    id: string;
+    id: number;
     concepto: string;
     porcentaje_iva: number;
     porcentaje_irpf: number;
