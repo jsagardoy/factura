@@ -10,6 +10,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const [receptor, setReceptor] = React.useState<Empresa>();
     const [factura, setFactura] = React.useState<Factura>();
     const [disabled, setDisabled] = React.useState<boolean>(true);
+    const [facturasList, setFacturasList] =  React.useState<Factura[]>([]);
     const selectedRow = (dataRow: Empresa, actionType: string) => {
         switch (actionType) {
             case 'Emisor':
@@ -32,8 +33,8 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         if (emisor && receptor) setDisabled(!emisor.selected && !receptor.selected);
         else setDisabled(true);
     };
-    const generateIDFactura = (year: number, facturasList: Factura[]): number => {
-        if (facturasList) {
+    const generateIdFactura = (year: number): number => {
+        if (factura.id) {
             const facturasAnualesOredenadas = facturasList
                 .filter(factura => factura.año === year)
                 .sort((a, b) => (a.id > b.id ? 1 : -1));
@@ -41,9 +42,20 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
             return lastFactura.id + 1;
         } else return 1;
     };
-
-    const fillFactura = () => {
-        const newFactura = { ...factura, emisor: emisor, receptor: receptor, id: generateIDFactura(factura.id, []) };
+    const handleInputSave = () => {
+        setFactura(fillFactura());
+        console.log(factura);
+        const newFacturasList:Factura[] = [...facturasList,factura];
+        setFacturasList(newFacturasList);
+        console.log(`lista ${JSON.stringify(newFacturasList)}`);
+    };
+    const fillFactura = (): Factura => {
+        const newFactura:Factura = { ...factura, 
+            emisor: emisor, 
+            receptor: receptor, 
+            id: generateIdFactura(factura.id),
+        };
+        return newFactura;
     };
     return (
         <AppLayout>
@@ -54,6 +66,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 emisor={emisor}
                 receptor={receptor}
                 handleInputChange={handleInputChange}
+                handleInputSave={handleInputSave}
             />
         </AppLayout>
     );

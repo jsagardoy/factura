@@ -7,17 +7,18 @@ interface FacturaProps {
     receptor: Empresa;
     disabled: boolean;
     handleInputChange: (fieldName: String, value: string | number | Date) => void;
+    handleInputSave: ()=> void;
 }
 
 export const FacturaScene: React.FC<FacturaProps> = props => {
-    const { handleInputChange, disabled } = props;
+    const { handleInputChange, disabled, handleInputSave } = props;
     return (
         <div>
             <h1>Factura</h1>
             <div>
-                <FacturaFormDialog disabled={disabled} handleInputChange={handleInputChange} />
+                <FacturaFormDialog disabled={disabled} handleInputChange={handleInputChange} handleInputSave={handleInputSave} />
             </div>
         </div>
-        //el botón para añadir //incluir la tabla
+    //incluir la tabla
     );
 };
