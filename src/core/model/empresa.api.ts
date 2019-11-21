@@ -17,13 +17,12 @@ export interface Factura {
     porcentaje_irpf: number;
     iva: number;
     irpf: number;
-    emisor: string;
-    receptor: string;
+    emisor: Empresa;
+    receptor: Empresa;
     cuantia: number;
     detalle?: string;
     año: number;
     fecha_emision: string;
-    iban: string;
 }
 
 export const emisoresData: Empresa[] = [

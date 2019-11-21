@@ -8,39 +8,43 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FacturaForm } from './factura.form';
 
-export const FacturaFormDialog = () => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Nueva factura
-      </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Nueva factura</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Introduzca una nueva factura
-          </DialogContentText>
-          <FacturaForm/>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Subscribe
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+interface FacturaFormProps {
+    handleInputChange: (fieldName: String, value: string | number | Date) => void;
+    disabled: boolean;
 }
+
+export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
+    const [open, setOpen] = React.useState(false);
+    const { handleInputChange, disabled } = props;
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <div>
+            <Button disabled={disabled} variant="outlined" color="primary" onClick={handleClickOpen}>
+                Nueva factura
+            </Button>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Nueva factura</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Introduzca una nueva factura</DialogContentText>
+                    <FacturaForm disabled={disabled} handleInputChange={handleInputChange} />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Subscribe
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
+};
