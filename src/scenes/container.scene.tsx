@@ -29,10 +29,9 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     });
     React.useEffect(() => {
         isDisabledOK();
-    },[factura]);
+    }, [factura]);
 
     const handleInputChange = <T extends any>(id: string, value: T) => {
-        console.log(typeof value);
         setFactura({ ...factura, [id]: value });
     };
     const isDisabled = (): void => {
@@ -41,23 +40,14 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     };
     const isDisabledOK = (): void => {
         if (factura) {
-           /*  setDisabledOK(!(
-                factura.año !== null &&
-                    factura.concepto!==null &&
-                    factura.detalle!==null &&
-                    factura.cuantia !== null &&
-                    factura.fecha_emision!==null &&
-                    factura.porcentaje_irpf !== null &&
-                    factura.porcentaje_iva !== null)
-            ); */
-           formValidation.validateForm(factura).then((validationResult)=>{
+            formValidation.validateForm(factura).then(validationResult => {
                 setDisabledOK(!validationResult.succeeded);
-            })
-            
+            });
         } else {
             setDisabledOK(true);
         }
     };
+    const cleanForm = ():void => {setFactura(null)};
     const generateIdFactura = (year: number): number => {
         if (factura.id) {
             const facturasAnualesOredenadas: Factura[] = facturasList
@@ -70,10 +60,8 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const handleInputSave = () => {
         const newFactura: Factura = fillFactura();
         setFactura(newFactura);
-        console.log(newFactura);
         const newFacturasList: Factura[] = [...facturasList, newFactura];
         setFacturasList(newFacturasList);
-        console.log(`lista ${JSON.stringify(newFacturasList)}`);
     };
     const fillFactura = (): Factura => {
         if (factura) {
@@ -98,6 +86,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 handleInputChange={handleInputChange}
                 handleInputSave={handleInputSave}
                 disabledOK={disabledOK}
+                cleanForm={cleanForm}
             />
         </AppLayout>
     );

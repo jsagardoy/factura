@@ -9,15 +9,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { FacturaForm } from './factura.form';
 
 interface FacturaFormProps {
-    handleInputChange:<T> (fieldName: String, value: T ) => void;
-    handleInputSave: () => void; 
     disabled: boolean;
     disabledOK:boolean;
+    handleInputChange:<T> (fieldName: String, value: T ) => void;
+    handleInputSave: () => void; 
+    cleanForm:()=>void;
 }
 
 export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
     const [open, setOpen] = React.useState(false);
-    const { handleInputChange, disabled, handleInputSave, disabledOK } = props;
+    const { handleInputChange, disabled, handleInputSave, disabledOK, cleanForm } = props;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -26,8 +27,7 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
     const handleClose = () => {
         setOpen(false);
     };
-
-    
+        
     return (
         <div>
             <Button disabled={disabled} variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -40,7 +40,7 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
                     <FacturaForm handleInputChange={handleInputChange} />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={(e)=>{handleClose();cleanForm()}} color="primary">
                         Cancelar
                     </Button>
                     <Button disabled={disabledOK} onClick={(e)=>{handleClose();handleInputSave()}} color="primary">
