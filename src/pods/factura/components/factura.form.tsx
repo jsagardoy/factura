@@ -10,15 +10,17 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
         <>
             <TextField
                 onChange={e => handleInputChange(e.target.id, e.target.value)}
+                required
                 autoFocus
                 margin="dense"
-                id="Concepto"
+                id="concepto"
                 label="Concepto"
                 type="string"
                 fullWidth
             />
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                required
                 autoFocus
                 margin="dense"
                 id="porcentaje_iva"
@@ -27,6 +29,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             />
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                required
                 autoFocus
                 margin="dense"
                 id="porcentaje_irpf"
@@ -35,6 +38,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             />
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                required
                 autoFocus
                 margin="dense"
                 id="cuantia"
@@ -43,6 +47,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             />
             <TextField
                 onChange={e => handleInputChange(e.target.id, e.target.value)}
+                required
                 autoFocus
                 margin="dense"
                 id="detalle"
@@ -52,6 +57,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             />
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                required
                 autoFocus
                 margin="dense"
                 id="año"
@@ -60,9 +66,10 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             />
             <TextField
                 onChange={e => handleInputChange(e.target.id, e.target.value)}
+                required
                 autoFocus
                 margin="dense"
-                id="fechaEmision"
+                id="fecha_emision"
                 label="Fecha de Emisión"
                 type="date"
                 InputLabelProps={{
