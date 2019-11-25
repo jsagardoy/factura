@@ -2,11 +2,10 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 interface FacturaFormProps {
-    handleInputChange: (fieldName: String, value: string | number | Date) => void;
-    disabled: boolean;
+    handleInputChange:<T> (fieldName: String, value: T ) => void;
 }
 export const FacturaForm: React.FC<FacturaFormProps> = props => {
-    const { handleInputChange, disabled } = props;
+    const { handleInputChange } = props;
     return (
         <>
             <TextField
@@ -19,7 +18,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                 fullWidth
             />
             <TextField
-                onChange={e => handleInputChange(e.target.id, e.target.value)}
+                onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 autoFocus
                 margin="dense"
                 id="porcentaje_iva"
@@ -27,7 +26,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                 type="number"
             />
             <TextField
-                onChange={e => handleInputChange(e.target.id, e.target.value)}
+                onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 autoFocus
                 margin="dense"
                 id="porcentaje_irpf"
@@ -35,7 +34,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                 type="number"
             />
             <TextField
-                onChange={e => handleInputChange(e.target.id, e.target.value)}
+                onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 autoFocus
                 margin="dense"
                 id="cuantia"
@@ -52,7 +51,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                 multiline
             />
             <TextField
-                onChange={e => handleInputChange(e.target.id, e.target.value)}
+                onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 autoFocus
                 margin="dense"
                 id="año"

@@ -6,7 +6,7 @@ interface FacturaProps {
     emisor: Empresa;
     receptor: Empresa;
     disabled: boolean;
-    handleInputChange: (fieldName: String, value: string | number | Date) => void;
+    handleInputChange:<T> (fieldName: String, value: T ) => void;
     handleInputSave: ()=> void;
 }
 

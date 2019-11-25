@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { FacturaForm } from './factura.form';
 
 interface FacturaFormProps {
-    handleInputChange: (fieldName: String, value: string | number | Date) => void;
+    handleInputChange:<T> (fieldName: String, value: T ) => void;
     handleInputSave: () => void; 
     disabled: boolean;
 }
@@ -35,7 +35,7 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
                 <DialogTitle id="form-dialog-title">Nueva factura</DialogTitle>
                 <DialogContent>
                     <DialogContentText>Introduzca una nueva factura</DialogContentText>
-                    <FacturaForm disabled={disabled} handleInputChange={handleInputChange} />
+                    <FacturaForm handleInputChange={handleInputChange} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
