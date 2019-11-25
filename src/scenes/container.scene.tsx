@@ -35,8 +35,8 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     };
     const generateIdFactura = (year: number): number => {
         if (factura.id) {
-            const facturasAnualesOredenadas = facturasList
-                .filter(factura => factura.año === year)
+            const facturasAnualesOredenadas:Factura[] = facturasList
+                .filter(factura => +factura.año === year)
                 .sort((a, b) => (a.id > b.id ? 1 : -1));
             const lastFactura = facturasAnualesOredenadas[facturasAnualesOredenadas.length - 1];
             return lastFactura.id + 1;
