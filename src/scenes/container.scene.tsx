@@ -10,7 +10,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const [receptor, setReceptor] = React.useState<Empresa>();
     const [factura, setFactura] = React.useState<Factura>();
     const [disabled, setDisabled] = React.useState<boolean>(true);
-    const [facturasList, setFacturasList] =  React.useState<Factura[]>([]);
+    const [facturasList, setFacturasList] = React.useState<Factura[]>([]);
     const selectedRow = (dataRow: Empresa, actionType: string) => {
         switch (actionType) {
             case 'Emisor':
@@ -43,19 +43,23 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         } else return 1;
     };
     const handleInputSave = () => {
-        setFactura(fillFactura());
-        console.log(factura);
-        const newFacturasList:Factura[] = [...facturasList,factura];
+        const newFactura: Factura = fillFactura();
+        setFactura(newFactura);
+        console.log(newFactura);
+        const newFacturasList: Factura[] = [...facturasList, newFactura];
         setFacturasList(newFacturasList);
         console.log(`lista ${JSON.stringify(newFacturasList)}`);
     };
     const fillFactura = (): Factura => {
-        const newFactura:Factura = { ...factura, 
-            emisor: emisor, 
-            receptor: receptor, 
-            id: generateIdFactura(factura.id),
-        };
-        return newFactura;
+        if (factura) {
+            const newFactura: Factura = {
+                ...factura,
+                emisor: emisor,
+                receptor: receptor,
+                id: generateIdFactura(factura.id),
+            };
+            return newFactura;
+        }
     };
     return (
         <AppLayout>
