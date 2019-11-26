@@ -86,6 +86,11 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
             return (factura.cuantia * factura.porcentaje_irpf/100);
         }
     }
+    const calculateTotal =():number =>{
+        if(factura && factura.cuantia && calculateIVA() && calculateIVA()){
+            return (factura.cuantia + calculateIVA() - calculateIRPF());
+        }
+    }
     const fillFactura = (): Factura => {
         if (factura) {
             const newFactura: Factura = {
@@ -95,6 +100,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 id: generateIdFactura(factura.id),
                 iva: calculateIVA(),
                 irpf: calculateIRPF(),
+                total: calculateTotal(),
             };
             return newFactura;
         }

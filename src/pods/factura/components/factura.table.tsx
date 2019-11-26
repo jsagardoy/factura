@@ -12,17 +12,18 @@ export const FacturaTable: React.FC<FacturaTablasProps> = props => {
     const { data, title } = props;
     const columnsFactura = [
         { title: 'Numero Factura', field: 'id' },
+        { title: 'Fecha de Emisión', field: 'fecha_emision' },
         { title: 'Concepto', field: 'concepto' },
-        { title: '% IVA', field: 'porcentaje_iva' },
-        { title: '% IRPF', field: 'porcentaje_irpf' },
-        { title: 'IVA', field: 'iva' },
-        { title: 'IRPF', field: 'irpf' },
-        { title: 'Emisor', field: 'emisor.nombre' },
-        { title: 'Receptor', field: 'receptor.nombre' },
         { title: 'Cuantía', field: 'cuantia' },
         { title: 'Detalle', field: 'detalle' },
-        { title: 'Año', field: 'año' },
-        { title: 'Fecha de Emisión', field: 'fecha_emision' },
+        { title: 'Emisor', field: 'emisor.nombre' },
+        { title: 'Receptor', field: 'receptor.nombre' },
+       /*  { title: '% IVA', field: 'porcentaje_iva' },
+        { title: '% IRPF', field: 'porcentaje_irpf' }, */
+        { title: 'IVA', field: 'iva' },
+        { title: 'IRPF', field: 'irpf' },
+        /* { title: 'Año', field: 'año' }, */
+        { title: 'Total', field: 'total' },
     ];
 
     const [values, setValues] = React.useState<TableState>({

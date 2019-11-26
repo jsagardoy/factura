@@ -23,6 +23,7 @@ export interface Factura {
     detalle?: string;
     año: number;
     fecha_emision: string;
+    total: number;
 }
 
 export const emisoresData: Empresa[] = [
