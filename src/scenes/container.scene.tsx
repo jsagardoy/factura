@@ -76,6 +76,16 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         const newFacturasList: Factura[] = [...facturasList, newFactura];
         setFacturasList(newFacturasList);
     };
+    const calculateIVA = ():number => {
+        if (factura && factura.cuantia && factura.porcentaje_iva){
+            return (factura.cuantia * factura.porcentaje_iva/100);
+        }
+    }
+    const calculateIRPF = ():number => {
+        if (factura && factura.cuantia && factura.porcentaje_irpf){
+            return (factura.cuantia * factura.porcentaje_irpf/100);
+        }
+    }
     const fillFactura = (): Factura => {
         if (factura) {
             const newFactura: Factura = {
@@ -83,6 +93,8 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 emisor: emisor,
                 receptor: receptor,
                 id: generateIdFactura(factura.id),
+                iva: calculateIVA(),
+                irpf: calculateIRPF(),
             };
             return newFactura;
         }
