@@ -47,7 +47,9 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
             setDisabledOK(true);
         }
     };
-    const cleanForm = ():void => {setFactura(null)};
+    const cleanForm = (): void => {
+        setFactura(null);
+    };
     const generateIdFactura = (year: number): number => {
         if (factura.id) {
             const facturasAnualesOredenadas: Factura[] = facturasList
@@ -87,6 +89,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 handleInputSave={handleInputSave}
                 disabledOK={disabledOK}
                 cleanForm={cleanForm}
+                facturaList={facturasList}
             />
         </AppLayout>
     );
