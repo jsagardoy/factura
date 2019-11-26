@@ -36,7 +36,7 @@ export const FacturaTabla: React.FC<FacturaTablasProps> = props => {
     }
 
     return (values.data.length > 0 )? (
-        <TableComponent title={title} data={values.data} columns={values.columns} setTable={setValues} />
+        <TableComponent title={title} data={data} columns={values.columns} setTable={setValues} />
     ) : (
         <h3>No hay facturas para mostrar</h3>
     );
