@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FacturaFormDialog } from 'pods/factura';
 import { Empresa, Factura } from '@core';
-import { FacturaTabla } from 'pods/factura/components/factura.table';
+import { FacturaTable } from 'pods/factura/components/factura.table';
 
 interface FacturaProps {
     emisor: Empresa;
@@ -34,7 +34,7 @@ export const FacturaScene: React.FC<FacturaProps> = props => {
                 />
             </div>
             {facturasAño.map((año: number) => (
-                <FacturaTabla key={año}
+                <FacturaTable key={año}
                     title={`Año ${año.toString()}`}
                     data={getYearData(año)}
                 />

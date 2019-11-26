@@ -8,7 +8,7 @@ interface FacturaTablasProps {
     data: Factura[];
 }
 
-export const FacturaTabla: React.FC<FacturaTablasProps> = props => {
+export const FacturaTable: React.FC<FacturaTablasProps> = props => {
     const { data, title } = props;
     const columnsFactura = [
         { title: 'Numero Factura', field: 'id' },
@@ -35,7 +35,7 @@ export const FacturaTabla: React.FC<FacturaTablasProps> = props => {
         data: Factura[];
     }
 
-    return (values.data.length > 0 )? (
+    return values.data.length > 0 ? (
         <TableComponent title={title} data={data} columns={values.columns} setTable={setValues} />
     ) : (
         <h3>No hay facturas para mostrar</h3>
