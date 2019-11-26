@@ -11,8 +11,27 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const [receptor, setReceptor] = React.useState<Empresa>();
     const [factura, setFactura] = React.useState<Factura>();
     const [disabled, setDisabled] = React.useState<boolean>(true);
+    const [facturasAño, setFacturasAño] = React.useState<number[]>([]);
     const [disabledOK, setDisabledOK] = React.useState<boolean>(false);
     const [facturasList, setFacturasList] = React.useState<Factura[]>([]);
+    //TO BE CHANGED, JUST FOR TESTING PURPOSE
+    React.useEffect(() => {
+        isDisabled();
+    });
+    React.useEffect(() => {
+        isDisabledOK();
+    }, [factura]);
+
+    React.useEffect(() => {
+        calculateYears();
+    }, [facturasList]);
+
+    const calculateYears = () =>
+        facturasList.map((factura: Factura) => {
+            if (!facturasAño.includes(factura.año)) {
+                setFacturasAño([...facturasAño, factura.año]);
+            }
+        });
     const selectedRow = (dataRow: Empresa, actionType: string) => {
         switch (actionType) {
             case 'Emisor':
@@ -23,14 +42,6 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 break;
         }
     };
-    //TO BE CHANGED, JUST FOR TESTING PURPOSE
-    React.useEffect(() => {
-        isDisabled();
-    });
-    React.useEffect(() => {
-        isDisabledOK();
-    }, [factura]);
-
     const handleInputChange = <T extends any>(id: string, value: T) => {
         setFactura({ ...factura, [id]: value });
     };
@@ -90,6 +101,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 disabledOK={disabledOK}
                 cleanForm={cleanForm}
                 facturaList={facturasList}
+                facturasAño={facturasAño}
             />
         </AppLayout>
     );

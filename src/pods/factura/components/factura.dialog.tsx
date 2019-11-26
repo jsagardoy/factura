@@ -43,7 +43,7 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
                     <Button onClick={(e)=>{handleClose();cleanForm()}} color="primary">
                         Cancelar
                     </Button>
-                    <Button disabled={disabledOK} onClick={(e)=>{handleClose();handleInputSave()}} color="primary">
+                    <Button disabled={disabledOK} onClick={(e)=>{handleClose();handleInputSave();cleanForm()}} color="primary">
                         OK
                     </Button>
                 </DialogActions>
