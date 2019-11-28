@@ -42,7 +42,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 break;
         }
     };
-    const handleInputChange = <T extends any>(id: string, value: T) => {
+    const handleInputChange = <T extends any>(id: any, value: T) => {
         setFactura({ ...factura, [id]: value });
     };
     const isDisabled = (): void => {
