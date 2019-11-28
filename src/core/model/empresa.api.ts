@@ -1,4 +1,5 @@
 export interface Empresa {
+    logoEmpresa?: string;
     selected: boolean;
     nombre: string;
     NIF: string;
@@ -28,6 +29,7 @@ export interface Factura {
 
 export const emisoresData: Empresa[] = [
            {
+               logoEmpresa: 'https://about.canva.com/wp-content/uploads/sites/3/2016/08/logos-1.png',
                selected: false,
                nombre: 'empresa1',
                NIF: '123456789',
@@ -40,6 +42,7 @@ export const emisoresData: Empresa[] = [
                disabled: false,
            },
            {
+               logoEmpresa: 'https://logomaster.ai/static/media/sample.c8bf2b04.svg',
                selected: false,
                nombre: 'empresa2',
                NIF: '987654321',

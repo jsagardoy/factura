@@ -4,30 +4,54 @@ import { Column } from 'material-table';
 import { TableComponent } from '@pods';
 import Checkbox from '@material-ui/core/Checkbox/Checkbox';
 
-interface EmpresaTablasProps{
+interface EmpresaTablasProps {
     title: string;
     data: Empresa[];
-    selectedRow: (dataRow:Empresa, actionType: string) => void;
+    selectedRow: (dataRow: Empresa, actionType: string) => void;
 }
 
-export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = (props) => {
-    const {data, title, selectedRow} = props;
-    const columnsEmpresa = [
-        {
-            title: 'Selected',
-            field: 'selected',
-            render: dataRow => selectionCheckBoxColumn(dataRow),
-        },
-        { title: 'Nombre', field: 'nombre' },
-        { title: 'NIF', field: 'NIF' },
-        { title: 'Dirección', field: 'direccion' },
-        { title: 'CP', field: 'CP' },
-        { title: 'Localidad', field: 'localidad' },
-        { title: 'Comunidad', field: 'comunidad' },
-        { title: 'Pais', field: 'pais' },
-        { title: 'IBAN', field: 'iban' },
-    ];
-
+export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = props => {
+    const { data, title, selectedRow } = props;
+    let columnsEmpresa = [];
+    if (data[0].logoEmpresa) {
+        columnsEmpresa = [
+            {
+                title: 'Selected',
+                field: 'selected',
+                render: dataRow => selectionCheckBoxColumn(dataRow),
+            },
+            {
+                title: 'Logo',
+                field: 'logoEmpresa',
+                render: (dataRow: Empresa) => (
+                    <img src={dataRow.logoEmpresa} style={{ width: 50, borderRadius: '50%' }} />
+                ),
+            },
+            { title: 'Nombre', field: 'nombre' },
+            { title: 'NIF', field: 'NIF' },
+            { title: 'Dirección', field: 'direccion' },
+            { title: 'CP', field: 'CP' },
+            { title: 'Localidad', field: 'localidad' },
+            { title: 'Comunidad', field: 'comunidad' },
+            { title: 'Pais', field: 'pais' },
+            { title: 'IBAN', field: 'iban' },
+        ];
+    } else {
+        columnsEmpresa = [
+            {
+                title: 'Selected',
+                field: 'selected',
+                render: dataRow => selectionCheckBoxColumn(dataRow),
+            },
+            { title: 'Nombre', field: 'nombre' },
+            { title: 'NIF', field: 'NIF' },
+            { title: 'Dirección', field: 'direccion' },
+            { title: 'CP', field: 'CP' },
+            { title: 'Localidad', field: 'localidad' },
+            { title: 'Comunidad', field: 'comunidad' },
+            { title: 'Pais', field: 'pais' },
+        ];
+    }
     const [values, setValues] = React.useState<TableState>({
         columns: columnsEmpresa,
         data: data,
@@ -50,7 +74,7 @@ export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = (props) => {
             }
         });
         setValues({ ...values, data: rest });
-        selectedRow(rest.find((item:Empresa)=>item.selected===true), title);
+        selectedRow(rest.find((item: Empresa) => item.selected === true), title);
     };
 
     interface TableState {
