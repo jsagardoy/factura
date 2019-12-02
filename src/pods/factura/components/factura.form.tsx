@@ -1,17 +1,12 @@
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-
+import {ListaDetalles} from './factura.list';
 interface FacturaFormProps {
     handleInputChange: <T>(fieldName: String, value: T) => void;
+    submitDetalle: (detalle)=>void;
 }
 export const FacturaForm: React.FC<FacturaFormProps> = props => {
-    const { handleInputChange } = props;
+    const { handleInputChange, submitDetalle } = props;
     return (
         <>
             <TextField
@@ -64,44 +59,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                     shrink: true,
                 }}
             />
-            <List dense={true}>
-                <ListItem>
-                    <ListItemText>
-                        <TextField
-                            onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                            required
-                            autoFocus
-                            margin="dense"
-                            id="detalle.elemento"
-                            label="Elemento"
-                            type="string"
-                        />
-                        <TextField
-                            onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                            required
-                            autoFocus
-                            margin="dense"
-                            id="detalle.cantidad"
-                            label="cantidad"
-                            type="number"
-                        />
-                        <TextField
-                            onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                            required
-                            autoFocus
-                            margin="dense"
-                            id="detalle.precio"
-                            label="Precio unidad"
-                            type="number"
-                        />
-                    </ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
-            </List>
+            <ListaDetalles submitDetalle={submitDetalle} />
         </>
     );
 };
