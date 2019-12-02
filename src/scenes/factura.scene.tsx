@@ -13,10 +13,11 @@ interface FacturaProps {
     handleInputChange: <T>(fieldName: String, value: T) => void;
     handleInputSave: () => void;
     cleanForm: () => void;
+    submitDetalle:(detalle)=>void;
 }
 
 export const FacturaScene: React.FC<FacturaProps> = props => {
-    const { handleInputChange, disabled, handleInputSave, disabledOK, cleanForm, facturaList, facturasAño } = props;
+    const { handleInputChange, disabled, handleInputSave, disabledOK, cleanForm, facturaList, facturasAño, submitDetalle } = props;
     const getYearData =(year:number):Factura[] =>{
         const newArray = facturaList.filter((factura: Factura) => factura.año === year);
         return newArray;
@@ -31,6 +32,7 @@ export const FacturaScene: React.FC<FacturaProps> = props => {
                     disabled={disabled}
                     handleInputChange={handleInputChange}
                     handleInputSave={handleInputSave}
+                    submitDetalle={submitDetalle}
                 />
             </div>
             {facturasAño.map((año: number) => (

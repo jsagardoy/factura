@@ -14,11 +14,12 @@ interface FacturaFormProps {
     handleInputChange:<T> (fieldName: String, value: T ) => void;
     handleInputSave: () => void; 
     cleanForm:()=>void;
+    submitDetalle:(detalle)=>void;
 }
 
 export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
     const [open, setOpen] = React.useState(false);
-    const { handleInputChange, disabled, handleInputSave, disabledOK, cleanForm } = props;
+    const { handleInputChange, disabled, handleInputSave, disabledOK, cleanForm, submitDetalle } = props;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -37,7 +38,7 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
                 <DialogTitle id="form-dialog-title">Nueva factura</DialogTitle>
                 <DialogContent>
                     <DialogContentText>Introduzca una nueva factura</DialogContentText>
-                    <FacturaForm handleInputChange={handleInputChange} />
+                    <FacturaForm handleInputChange={handleInputChange} submitDetalle={submitDetalle}/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={(e)=>{handleClose();cleanForm()}} color="primary">
