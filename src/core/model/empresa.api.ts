@@ -21,13 +21,13 @@ export interface Factura {
     emisor: Empresa;
     receptor: Empresa;
     cuantia: number;
-    detalle?: {
+    detalle?: [{
         elemento: string;
         precio:number;
         cantidad: number;
         iva:number;
         total:number;     
-    }[];
+    }];
     año: number;
     fecha_emision: string;
     total: number;
