@@ -98,9 +98,9 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
             return (cuantia * factura.porcentaje_irpf) / 100;
         }
     };
-    const calculateTotal = (): number => {
-        if (factura && factura.cuantia && calculateIVA(factura.cuantia) && calculateIVA(factura.cuantia)) {
-            return factura.cuantia + calculateIVA(factura.cuantia) - calculateIRPF(factura.cuantia);
+    const calculateTotal = (cuantia:number): number => {
+        if (factura && cuantia && calculateIVA(cuantia) && calculateIRPF(cuantia)) {
+            return cuantia + calculateIVA(cuantia) - calculateIRPF(cuantia);
         }
     };
     //const calculateCuantia = ():number =>{}
@@ -130,7 +130,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 cuantia: facturaWithDetails.cuantia,
                 iva: calculateIVA(facturaWithDetails.cuantia),
                 irpf: calculateIRPF(facturaWithDetails.cuantia),
-                total: calculateTotal(),
+                total: calculateTotal(facturaWithDetails.cuantia),
             };
             return newFactura;
         }

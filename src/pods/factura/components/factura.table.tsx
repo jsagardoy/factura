@@ -15,14 +15,10 @@ export const FacturaTable: React.FC<FacturaTablasProps> = props => {
         { title: 'Fecha de Emisión', field: 'fecha_emision' },
         { title: 'Concepto', field: 'concepto' },
         { title: 'Cuantía', field: 'cuantia' },
-        { title: 'Detalle', field: 'detalle' },
         { title: 'Emisor', field: 'emisor.nombre' },
         { title: 'Receptor', field: 'receptor.nombre' },
-       /*  { title: '% IVA', field: 'porcentaje_iva' },
-        { title: '% IRPF', field: 'porcentaje_irpf' }, */
         { title: 'IVA', field: 'iva' },
         { title: 'IRPF', field: 'irpf' },
-        /* { title: 'Año', field: 'año' }, */
         { title: 'Total', field: 'total' },
     ];
 
