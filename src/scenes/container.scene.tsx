@@ -3,6 +3,7 @@ import { AppLayout } from '@layout';
 import { EmpresaTablaScene, FacturaScene } from '@scenes';
 import { emisoresData, receptoresData, Empresa, Factura } from '@core';
 import { formValidation } from 'common-app/validations';
+import { totalmem } from 'os';
 
 interface MainContainerProps {}
 
@@ -45,6 +46,17 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const handleInputChange = <T extends any>(id: any, value: T) => {
         setFactura({ ...factura, [id]: value });
     };
+    const submitDetalle = detalle => {
+        let newDetalle = [];
+        if (factura.detalle) {
+            newDetalle = [...factura.detalle];
+        }
+        newDetalle.push(detalle);
+        setFactura({
+            ...factura,
+            detalle: newDetalle,
+        });
+    };
     const isDisabled = (): void => {
         if (emisor && receptor) setDisabled(!emisor.selected && !receptor.selected);
         else setDisabled(true);
@@ -76,30 +88,48 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         const newFacturasList: Factura[] = [...facturasList, newFactura];
         setFacturasList(newFacturasList);
     };
-    const calculateIVA = ():number => {
-        if (factura && factura.cuantia && factura.porcentaje_iva){
-            return (factura.cuantia * factura.porcentaje_iva/100);
+    const calculateIVA = (cuantia:number): number => {
+        if (factura && cuantia && factura.porcentaje_iva) {
+            return (cuantia * factura.porcentaje_iva) / 100;
         }
-    }
-    const calculateIRPF = ():number => {
-        if (factura && factura.cuantia && factura.porcentaje_irpf){
-            return (factura.cuantia * factura.porcentaje_irpf/100);
+    };
+    const calculateIRPF = (cuantia:number): number => {
+        if (factura && cuantia && factura.porcentaje_irpf) {
+            return (cuantia * factura.porcentaje_irpf) / 100;
         }
-    }
-    const calculateTotal =():number =>{
-        if(factura && factura.cuantia && calculateIVA() && calculateIVA()){
-            return (factura.cuantia + calculateIVA() - calculateIRPF());
+    };
+    const calculateTotal = (): number => {
+        if (factura && factura.cuantia && calculateIVA(factura.cuantia) && calculateIVA(factura.cuantia)) {
+            return factura.cuantia + calculateIVA(factura.cuantia) - calculateIRPF(factura.cuantia);
         }
-    }
+    };
+    //const calculateCuantia = ():number =>{}
+    const calculateDetalle = (factura: Factura): Factura => {
+        if (factura && factura.detalle.length > 0) {
+            const reducer = (acum, value) => acum + value;
+            const newDetalle = factura.detalle.map(detalle => {
+                return {
+                    ...detalle,
+                    iva: (detalle.precio * detalle.cantidad * factura.porcentaje_iva) / 100,
+                    total: detalle.precio * detalle.cantidad * (1 + factura.porcentaje_iva / 100),
+                };
+            });
+            const cuantia = newDetalle.reduce(reducer).total - newDetalle.reduce(reducer).iva;
+            return { ...factura, detalle: newDetalle, cuantia };
+        }
+    };
+
     const fillFactura = (): Factura => {
         if (factura) {
+            const facturaWithDetails = calculateDetalle(factura);
             const newFactura: Factura = {
                 ...factura,
                 emisor: emisor,
                 receptor: receptor,
                 id: generateIdFactura(factura.id),
-                iva: calculateIVA(),
-                irpf: calculateIRPF(),
+                cuantia: facturaWithDetails.cuantia,
+                iva: calculateIVA(facturaWithDetails.cuantia),
+                irpf: calculateIRPF(facturaWithDetails.cuantia),
                 total: calculateTotal(),
             };
             return newFactura;
@@ -120,6 +150,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 cleanForm={cleanForm}
                 facturaList={facturasList}
                 facturasAño={facturasAño}
+                submitDetalle={submitDetalle}
             />
         </AppLayout>
     );
