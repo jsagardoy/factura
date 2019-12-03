@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppLayout } from '@layout';
 import { EmpresaTablaScene, FacturaScene } from '@scenes';
-import { emisoresData, receptoresData, Empresa, Factura } from '@core';
+import { emisoresData, receptoresData, Empresa, Factura, Detalle } from '@core';
 import { formValidation } from 'common-app/validations';
 import { totalmem } from 'os';
 
@@ -103,19 +103,21 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
             return cuantia + calculateIVA(cuantia) - calculateIRPF(cuantia);
         }
     };
-    //const calculateCuantia = ():number =>{}
+    const reducer = (acum, value) => (acum + value);
+    
     const calculateDetalle = (factura: Factura): Factura => {
         if (factura && factura.detalle.length > 0) {
-            const reducer = (acum, value) => acum + value;
-            const newDetalle = factura.detalle.map(detalle => {
+            const newDetalle:Detalle[] = factura.detalle.map((detalle:Detalle )=> {
                 return {
                     ...detalle,
                     iva: (detalle.precio * detalle.cantidad * factura.porcentaje_iva) / 100,
                     total: detalle.precio * detalle.cantidad * (1 + factura.porcentaje_iva / 100),
                 };
             });
-            const cuantia = newDetalle.reduce(reducer).total - newDetalle.reduce(reducer).iva;
-            return { ...factura, detalle: newDetalle, cuantia };
+            const detalleTotalList:number[]=newDetalle.map((detalle)=>detalle.total);
+            const detalleIVAList:number[]=newDetalle.map((detalle)=>detalle.iva);
+            const cuantia:number = detalleTotalList.reduce(reducer)- detalleIVAList.reduce(reducer);
+            return { ...factura,detalle:newDetalle, cuantia };
         }
     };
 

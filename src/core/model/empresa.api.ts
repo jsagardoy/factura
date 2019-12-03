@@ -21,18 +21,19 @@ export interface Factura {
     emisor: Empresa;
     receptor: Empresa;
     cuantia: number;
-    detalle?: {
-        elemento: string;
-        precio:number;
-        cantidad: number;
-        iva:number;
-        total:number;     
-    }[];
+    detalle?: Detalle[];
     año: number;
     fecha_emision: string;
     total: number;
 }
 
+export type Detalle = {
+        elemento: string;
+        precio:number;
+        cantidad: number;
+        iva:number;
+        total:number;     
+}
 export const emisoresData: Empresa[] = [
            {
                logoEmpresa: 'https://about.canva.com/wp-content/uploads/sites/3/2016/08/logos-1.png',

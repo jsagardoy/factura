@@ -1,12 +1,20 @@
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import {ListaDetalles} from './factura.list';
+import { Detalle } from '@core';
+
 interface FacturaFormProps {
     handleInputChange: <T>(fieldName: String, value: T) => void;
-    submitDetalle: (detalle)=>void;
+    submitDetalle: (detalle:Detalle)=>void;
 }
 export const FacturaForm: React.FC<FacturaFormProps> = props => {
-    const { handleInputChange, submitDetalle } = props;
+    const { handleInputChange, submitDetalle} = props;
+    const [detalleList, setDetalleList]=  React.useState<Detalle[]>([]);
+    const composeDetalleList = (detalle:Detalle) =>{
+        const newDetalleList:Detalle[] = [...detalleList];
+        newDetalleList.push(detalle);
+        setDetalleList(newDetalleList);
+    }
     return (
         <>
             <TextField
@@ -22,7 +30,6 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 required
-                autoFocus
                 margin="dense"
                 id="porcentaje_iva"
                 label="% IVA"
@@ -31,7 +38,6 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 required
-                autoFocus
                 margin="dense"
                 id="porcentaje_irpf"
                 label="% IRPF"
@@ -41,7 +47,6 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 required
-                autoFocus
                 margin="dense"
                 id="año"
                 label="Año"
@@ -50,7 +55,6 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
             <TextField
                 onChange={e => handleInputChange(e.target.id, e.target.value)}
                 required
-                autoFocus
                 margin="dense"
                 id="fecha_emision"
                 label="Fecha de Emisión"
@@ -59,7 +63,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                     shrink: true,
                 }}
             />
-            <ListaDetalles submitDetalle={submitDetalle} />
+            <ListaDetalles submitDetalle={submitDetalle} detalleList= {detalleList} composeDetalleList={composeDetalleList}/>
         </>
     );
 };

@@ -8,58 +8,100 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
+import Button from '@material-ui/core/Button';
+import { Detalle } from '@core';
 
-
-interface PropsDetalle{
-    submitDetalle:(detalle)=>void;
+interface PropsDetalle {
+    detalleList: Detalle[];
+    submitDetalle: (detalle: Detalle) => void;
+    composeDetalleList: (detalle: Detalle) => void;
 }
-export const ListaDetalles: React.FC<PropsDetalle> = (props) => {
-    const {submitDetalle} = props;
-    const [detalle, setDetalle] = React.useState([]);
+export const ListaDetalles: React.FC<PropsDetalle> = props => {
+    const { submitDetalle, detalleList, composeDetalleList } = props;
+    const [detalle, setDetalle] = React.useState<Detalle>();
+    const [showAdd, setShowAdd] = React.useState<boolean>(false);
+
     const handleInputChange = (id: string, value: any) => {
         setDetalle({ ...detalle, [id]: value });
     };
-    return (
+    const AddNewItem = () => {
+        if (showAdd) {
+            return (
+                <List dense={true}>
+                    <ListItem>
+                        <ListItemText>
+                            <TextField
+                                onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                                required
+                                margin="dense"
+                                id="elemento"
+                                label="Elemento"
+                                type="string"
+                            />
+                            <TextField
+                                onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                                required
+                                margin="dense"
+                                id="cantidad"
+                                label="cantidad"
+                                type="number"
+                            />
+                            <TextField
+                                onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                                required
+                                margin="dense"
+                                id="precio"
+                                label="Precio unidad"
+                                type="number"
+                            />
+                        </ListItemText>
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="Eliminar">
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                                edge="end"
+                                aria-label="Guardar"
+                                onClick={e => {
+                                    submitDetalle(detalle);
+                                    composeDetalleList(detalle);
+                                }}
+                            >
+                                <SaveIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                </List>
+            );
+        } else return null;
+    };
+    const showNewItem = () => setShowAdd(!showAdd);
+
+    const ShowList = () => (
         <List dense={true}>
-            <ListItem>
-                <ListItemText>
-                    <TextField
-                        onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="elemento"
-                        label="Elemento"
-                        type="string"
-                    />
-                    <TextField
-                        onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="cantidad"
-                        label="cantidad"
-                        type="number"
-                    />
-                    <TextField
-                        onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="precio"
-                        label="Precio unidad"
-                        type="number"
-                    />
-                </ListItemText>
-                <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="Eliminar">
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton edge="end" aria-label="Añadir" onClick={(e)=>submitDetalle(detalle)}>
-                        <SaveIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>
-            </ListItem>
+            {detalleList.map(element => (
+                <ListItem>
+                    <ListItemText primary={element.elemento} />
+                    <ListItemText primary={element.cantidad} />
+                    <ListItemText primary={element.precio} />
+                    <ListItemSecondaryAction>
+                        <IconButton edge="end" aria-label="Eliminar">
+                            <DeleteIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+            ))}
         </List>
+    );
+
+    return (
+        <>
+            <h4>Lista de elementos a mostrar</h4>
+            <Button onClick={e => showNewItem()}>
+                <AddIcon />
+            </Button>
+            <AddNewItem />
+            <ShowList />
+        </>
     );
 };
