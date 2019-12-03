@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
 import { Detalle } from '@core';
+import { AddDetallesFacturaForm } from './factura.form.list';
 
 interface PropsDetalle {
     detalleList: Detalle[];
@@ -24,63 +25,13 @@ export const ListaDetalles: React.FC<PropsDetalle> = props => {
     const handleInputChange = (id: string, value: any) => {
         setDetalle({ ...detalle, [id]: value });
     };
-    const AddNewItem = () => {
-        if (showAdd) {
-            return (
-                <List dense={true}>
-                    <ListItem>
-                        <ListItemText>
-                            <TextField
-                                onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                                required
-                                margin="dense"
-                                id="elemento"
-                                label="Elemento"
-                                type="string"
-                            />
-                            <TextField
-                                onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                                required
-                                margin="dense"
-                                id="cantidad"
-                                label="cantidad"
-                                type="number"
-                            />
-                            <TextField
-                                onChange={e => handleInputChange(e.target.id, +e.target.value)}
-                                required
-                                margin="dense"
-                                id="precio"
-                                label="Precio unidad"
-                                type="number"
-                            />
-                        </ListItemText>
-                        <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="Eliminar">
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton
-                                edge="end"
-                                aria-label="Guardar"
-                                onClick={e => {
-                                    submitDetalle(detalle);
-                                    composeDetalleList(detalle);
-                                }}
-                            >
-                                <SaveIcon />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                </List>
-            );
-        } else return null;
-    };
+
     const showNewItem = () => setShowAdd(!showAdd);
 
     const ShowList = () => (
         <List dense={true}>
             {detalleList.map(element => (
-                <ListItem>
+                <ListItem key={element.elemento}>
                     <ListItemText primary={element.elemento} />
                     <ListItemText primary={element.cantidad} />
                     <ListItemText primary={element.precio} />
@@ -100,7 +51,15 @@ export const ListaDetalles: React.FC<PropsDetalle> = props => {
             <Button onClick={e => showNewItem()}>
                 <AddIcon />
             </Button>
-            <AddNewItem />
+            {/* <AddNewItem /> */}
+            {showAdd ? (
+                <AddDetallesFacturaForm
+                    detalle={detalle}
+                    handleInputChange={handleInputChange}
+                    submitDetalle={submitDetalle}
+                    composeDetalleList={composeDetalleList}
+                />
+            ) : null}
             <ShowList />
         </>
     );
