@@ -15,15 +15,17 @@ interface FacturaFormProps{
     handleInputChange:(id:string, value:any)=>void;
     submitDetalle: (detalle: Detalle) => void;
     composeDetalleList: (detalle: Detalle) => void;
+    showNewItem:()=>void
 }
 export const AddDetallesFacturaForm:React.FC<FacturaFormProps> = (props) => {
-    const {handleInputChange, submitDetalle, composeDetalleList, detalle} = props;
+    const {handleInputChange, submitDetalle, composeDetalleList, detalle, showNewItem} = props;
 return(
     <List dense={true}>
         <ListItem>
             <ListItemText>
                 <TextField
                     onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                    autoFocus
                     required
                     margin="dense"
                     id="elemento"
@@ -55,6 +57,7 @@ return(
                     edge="end"
                     aria-label="Guardar"
                     onClick={e => {
+                        showNewItem();
                         submitDetalle(detalle);
                         composeDetalleList(detalle);
                     }}

@@ -1,20 +1,20 @@
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
-import {ListaDetalles} from './factura.list';
+import { ListaDetalles } from './factura.list';
 import { Detalle } from '@core';
 
 interface FacturaFormProps {
     handleInputChange: <T>(fieldName: String, value: T) => void;
-    submitDetalle: (detalle:Detalle)=>void;
+    submitDetalle: (detalle: Detalle) => void;
 }
 export const FacturaForm: React.FC<FacturaFormProps> = props => {
-    const { handleInputChange, submitDetalle} = props;
-    const [detalleList, setDetalleList]=  React.useState<Detalle[]>([]);
-    const composeDetalleList = (detalle:Detalle) =>{
-        const newDetalleList:Detalle[] = [...detalleList];
+    const { handleInputChange, submitDetalle } = props;
+    const [detalleList, setDetalleList] = React.useState<Detalle[]>([]);
+    const composeDetalleList = (detalle: Detalle) => {
+        const newDetalleList: Detalle[] = [...detalleList];
         newDetalleList.push(detalle);
         setDetalleList(newDetalleList);
-    }
+    };
     return (
         <>
             <TextField
@@ -43,7 +43,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                 label="% IRPF"
                 type="number"
             />
-            
+
             <TextField
                 onChange={e => handleInputChange(e.target.id, +e.target.value)}
                 required
@@ -63,7 +63,11 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                     shrink: true,
                 }}
             />
-            <ListaDetalles submitDetalle={submitDetalle} detalleList= {detalleList} composeDetalleList={composeDetalleList}/>
+            <ListaDetalles
+                submitDetalle={submitDetalle}
+                detalleList={detalleList}
+                composeDetalleList={composeDetalleList}
+            />
         </>
     );
 };

@@ -47,19 +47,19 @@ export const ListaDetalles: React.FC<PropsDetalle> = props => {
 
     return (
         <>
-            <h4>Lista de elementos a mostrar</h4>
             <Button onClick={e => showNewItem()}>
-                <AddIcon />
+                Añadir Elementos <AddIcon />
             </Button>
-            {/* <AddNewItem /> */}
+            <h4>Lista de elementos a mostrar</h4>
             {showAdd ? (
                 <AddDetallesFacturaForm
                     detalle={detalle}
                     handleInputChange={handleInputChange}
                     submitDetalle={submitDetalle}
                     composeDetalleList={composeDetalleList}
+                    showNewItem={showNewItem}
                 />
-            ) : null}
+            ) : <p>No hay elementos añadidos</p>}
             <ShowList />
         </>
     );
