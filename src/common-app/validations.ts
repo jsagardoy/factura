@@ -7,8 +7,18 @@ const validationSchema = {
         porcentaje_irpf:[Validators.required.validator],
         año:[Validators.required.validator],
         fecha_emision:[Validators.required.validator],
-        //TODO validación para detalle?
+        detalle:[Validators.required.validator],
     }
 }
 
 export const formValidation =  createFormValidation (validationSchema);
+
+const validationSchemaDetalle = {
+    field:{
+        elemento:[Validators.required.validator],
+        precio:[Validators.required.validator],
+        cantidad:[Validators.required.validator],
+    }
+}
+
+export const formValidationDetalle= createFormValidation(validationSchemaDetalle);

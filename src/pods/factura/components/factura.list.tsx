@@ -14,11 +14,12 @@ import { AddDetallesFacturaForm } from './factura.form.list';
 
 interface PropsDetalle {
     detalleList: Detalle[];
+    isDisabledOKFactura:boolean;
     submitDetalle: (detalle: Detalle) => void;
     composeDetalleList: (detalle: Detalle) => void;
 }
 export const ListaDetalles: React.FC<PropsDetalle> = props => {
-    const { submitDetalle, detalleList, composeDetalleList } = props;
+    const { submitDetalle, detalleList, composeDetalleList, isDisabledOKFactura } = props;
     const [detalle, setDetalle] = React.useState<Detalle>();
     const [showAdd, setShowAdd] = React.useState<boolean>(false);
 
@@ -58,6 +59,7 @@ export const ListaDetalles: React.FC<PropsDetalle> = props => {
                     submitDetalle={submitDetalle}
                     composeDetalleList={composeDetalleList}
                     showNewItem={showNewItem}
+                    isDisabledOKFactura={isDisabledOKFactura}
                 />
             ) : <p>No hay elementos añadidos</p>}
             <ShowList />

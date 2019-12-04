@@ -4,11 +4,12 @@ import { ListaDetalles } from './factura.list';
 import { Detalle } from '@core';
 
 interface FacturaFormProps {
+    isDisabledOKFactura:boolean;
     handleInputChange: <T>(fieldName: String, value: T) => void;
     submitDetalle: (detalle: Detalle) => void;
 }
 export const FacturaForm: React.FC<FacturaFormProps> = props => {
-    const { handleInputChange, submitDetalle } = props;
+    const { handleInputChange, submitDetalle, isDisabledOKFactura } = props;
     const [detalleList, setDetalleList] = React.useState<Detalle[]>([]);
     const composeDetalleList = (detalle: Detalle) => {
         const newDetalleList: Detalle[] = [...detalleList];
@@ -67,6 +68,7 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
                 submitDetalle={submitDetalle}
                 detalleList={detalleList}
                 composeDetalleList={composeDetalleList}
+                isDisabledOKFactura={isDisabledOKFactura}
             />
         </>
     );

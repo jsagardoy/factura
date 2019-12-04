@@ -8,16 +8,31 @@ import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SaveIcon from '@material-ui/icons/Save';
 import { Detalle } from '@core';
+import { formValidationDetalle } from 'common-app/validations';
 
 interface FacturaFormProps {
     detalle: Detalle;
+    isDisabledOKFactura: boolean;
     handleInputChange: (id: string, value: any) => void;
     submitDetalle: (detalle: Detalle) => void;
     composeDetalleList: (detalle: Detalle) => void;
     showNewItem: () => void;
 }
 export const AddDetallesFacturaForm: React.FC<FacturaFormProps> = props => {
-    const { handleInputChange, submitDetalle, composeDetalleList, detalle, showNewItem } = props;
+    const { handleInputChange, submitDetalle, composeDetalleList, detalle, showNewItem, isDisabledOKFactura } = props;
+    const [disableOK, setDisabledOK] = React.useState(true);
+    React.useEffect(() => {
+        isDisabledOK();
+    }, [detalle]);
+    const isDisabledOK = () => {
+        if (detalle) {
+            formValidationDetalle.validateForm(detalle).then(validationResult => {
+                setDisabledOK(!(validationResult.succeeded&&isDisabledOKFactura));
+            });
+        } else {
+            setDisabledOK(true);
+        }
+    };
     return (
         <List dense={true}>
             <ListItem>
@@ -55,6 +70,7 @@ export const AddDetallesFacturaForm: React.FC<FacturaFormProps> = props => {
                     <IconButton
                         edge="end"
                         aria-label="Guardar"
+                        disabled={disableOK}
                         onClick={e => {
                             showNewItem();
                             submitDetalle(detalle);

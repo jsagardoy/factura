@@ -10,11 +10,11 @@ import { FacturaForm } from './factura.form';
 
 interface FacturaFormProps {
     disabled: boolean;
-    disabledOK:boolean;
-    handleInputChange:<T> (fieldName: String, value: T ) => void;
-    handleInputSave: () => void; 
-    cleanForm:()=>void;
-    submitDetalle:(detalle)=>void;
+    disabledOK: boolean;
+    handleInputChange: <T>(fieldName: String, value: T) => void;
+    handleInputSave: () => void;
+    cleanForm: () => void;
+    submitDetalle: (detalle) => void;
 }
 
 export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
@@ -28,7 +28,7 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
     const handleClose = () => {
         setOpen(false);
     };
-        
+
     return (
         <div>
             <Button disabled={disabled} variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -38,13 +38,31 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
                 <DialogTitle id="form-dialog-title">Nueva factura</DialogTitle>
                 <DialogContent>
                     <DialogContentText>Introduzca una nueva factura</DialogContentText>
-                    <FacturaForm handleInputChange={handleInputChange} submitDetalle={submitDetalle}/>
+                    <FacturaForm
+                        handleInputChange={handleInputChange}
+                        submitDetalle={submitDetalle}
+                        isDisabledOKFactura={disabledOK}
+                    />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={(e)=>{handleClose();cleanForm()}} color="primary">
+                    <Button
+                        onClick={e => {
+                            handleClose();
+                            cleanForm();
+                        }}
+                        color="primary"
+                    >
                         Cancelar
                     </Button>
-                    <Button disabled={disabledOK} onClick={(e)=>{handleClose();handleInputSave();cleanForm()}} color="primary">
+                    <Button
+                        disabled={disabledOK}
+                        onClick={e => {
+                            handleClose();
+                            handleInputSave();
+                            cleanForm();
+                        }}
+                        color="primary"
+                    >
                         OK
                     </Button>
                 </DialogActions>
