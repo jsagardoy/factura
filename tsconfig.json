@@ -17,7 +17,7 @@
             "@core": ["core"],
             "@pods": ["pods"],
             "@common": ["common"],
-            "@common-app":["common-app"],
+            "@common-app": ["common-app"],
             "@content": ["content"],
             "@locales": ["locales"]
         }

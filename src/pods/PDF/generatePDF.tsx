@@ -34,7 +34,7 @@ export const jsPdfGenerator = (factura: Factura) => {
     doc.text(factura.receptor.NIF, 100, 55);
 
     //datos
-   /*  var options = {
+    /*  var options = {
         theme: 'grid',
         columnStyles: {
             Descripción:          {columnWidth: 30, },

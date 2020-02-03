@@ -88,36 +88,36 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         const newFacturasList: Factura[] = [...facturasList, newFactura];
         setFacturasList(newFacturasList);
     };
-    const calculateIVA = (cuantia:number): number => {
+    const calculateIVA = (cuantia: number): number => {
         if (factura && cuantia && factura.porcentaje_iva) {
             return (cuantia * factura.porcentaje_iva) / 100;
         }
     };
-    const calculateIRPF = (cuantia:number): number => {
+    const calculateIRPF = (cuantia: number): number => {
         if (factura && cuantia && factura.porcentaje_irpf) {
             return (cuantia * factura.porcentaje_irpf) / 100;
         }
     };
-    const calculateTotal = (cuantia:number): number => {
+    const calculateTotal = (cuantia: number): number => {
         if (factura && cuantia && calculateIVA(cuantia) && calculateIRPF(cuantia)) {
             return cuantia + calculateIVA(cuantia) - calculateIRPF(cuantia);
         }
     };
-    const reducer = (acum, value) => (acum + value);
-    
+    const reducer = (acum, value) => acum + value;
+
     const calculateDetalle = (factura: Factura): Factura => {
         if (factura && factura.detalle.length > 0) {
-            const newDetalle:Detalle[] = factura.detalle.map((detalle:Detalle )=> {
+            const newDetalle: Detalle[] = factura.detalle.map((detalle: Detalle) => {
                 return {
                     ...detalle,
                     iva: (detalle.precio * detalle.cantidad * factura.porcentaje_iva) / 100,
                     total: detalle.precio * detalle.cantidad * (1 + factura.porcentaje_iva / 100),
                 };
             });
-            const detalleTotalList:number[]=newDetalle.map((detalle)=>detalle.total);
-            const detalleIVAList:number[]=newDetalle.map((detalle)=>detalle.iva);
-            const cuantia:number = detalleTotalList.reduce(reducer)- detalleIVAList.reduce(reducer);
-            return { ...factura,detalle:newDetalle, cuantia };
+            const detalleTotalList: number[] = newDetalle.map(detalle => detalle.total);
+            const detalleIVAList: number[] = newDetalle.map(detalle => detalle.iva);
+            const cuantia: number = detalleTotalList.reduce(reducer) - detalleIVAList.reduce(reducer);
+            return { ...factura, detalle: newDetalle, cuantia };
         }
     };
 

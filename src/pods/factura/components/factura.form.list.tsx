@@ -27,7 +27,7 @@ export const AddDetallesFacturaForm: React.FC<FacturaFormProps> = props => {
     const isDisabledOK = () => {
         if (detalle) {
             formValidationDetalle.validateForm(detalle).then(validationResult => {
-                setDisabledOK(!(validationResult.succeeded&&isDisabledOKFactura));
+                setDisabledOK(!(validationResult.succeeded && isDisabledOKFactura));
             });
         } else {
             setDisabledOK(true);

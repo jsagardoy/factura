@@ -4,7 +4,7 @@ import { ListaDetalles } from './factura.list';
 import { Detalle } from '@core';
 
 interface FacturaFormProps {
-    isDisabledOKFactura:boolean;
+    isDisabledOKFactura: boolean;
     handleInputChange: <T>(fieldName: String, value: T) => void;
     submitDetalle: (detalle: Detalle) => void;
 }

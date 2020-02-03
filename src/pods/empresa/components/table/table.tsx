@@ -6,10 +6,10 @@ interface TableProps {
     columns: Array<Column<any>>;
     data: any[];
     title: string;
-    setTable:(value)=>void;
+    setTable: (value) => void;
 }
 export const TableComponent: React.FC<TableProps> = props => {
-       const {columns, data, title, setTable} = props;
+    const { columns, data, title, setTable } = props;
     return (
         <MaterialTable
             localization={{
@@ -47,7 +47,7 @@ export const TableComponent: React.FC<TableProps> = props => {
             }}
             options={{
                 actionsColumnIndex: -1,
-              }}
+            }}
             title={title}
             columns={columns}
             data={data}

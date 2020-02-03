@@ -4,16 +4,13 @@ import { AppHeader, AppContent } from './components';
 
 const styles = (theme: Theme) => createStyles({});
 interface Props extends WithStyles<typeof styles> {}
-const AppLayoutInner: React.FunctionComponent<Props> = (props) => {
-    const {classes, children} = props;
-    return(
+const AppLayoutInner: React.FunctionComponent<Props> = props => {
+    const { classes, children } = props;
+    return (
         <div>
-            <AppHeader/>
-            <AppContent>
-                {children}
-            </AppContent>
+            <AppHeader />
+            <AppContent>{children}</AppContent>
         </div>
-
     );
 };
 

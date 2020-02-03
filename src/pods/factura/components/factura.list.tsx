@@ -14,7 +14,7 @@ import { AddDetallesFacturaForm } from './factura.form.list';
 
 interface PropsDetalle {
     detalleList: Detalle[];
-    isDisabledOKFactura:boolean;
+    isDisabledOKFactura: boolean;
     submitDetalle: (detalle: Detalle) => void;
     composeDetalleList: (detalle: Detalle) => void;
 }
@@ -61,7 +61,9 @@ export const ListaDetalles: React.FC<PropsDetalle> = props => {
                     showNewItem={showNewItem}
                     isDisabledOKFactura={isDisabledOKFactura}
                 />
-            ) : <p>No hay elementos añadidos</p>}
+            ) : (
+                <p>No hay elementos añadidos</p>
+            )}
             <ShowList />
         </>
     );
