@@ -67,9 +67,9 @@ export const ListaDetalles: React.FC<PropsDetalle> = props => {
                     isDisabledOKFactura={isDisabledOKFactura}
                     clearDetalle={clearDetalle}
                 />
-            ) : (
+            ) : detalleList.length === 0 ? (
                 <p>No hay elementos añadidos</p>
-            )}
+            ) : null}
             <ShowList />
         </>
     );
