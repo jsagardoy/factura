@@ -57,15 +57,7 @@ export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = props => {
         data: data,
     });
 
-    const selectionCheckBoxColumn = (dataRow: Empresa) => (
-        <Checkbox
-            checked={dataRow.selected}
-            disabled={dataRow.disabled && !dataRow.selected}
-            onChange={e => handleCheckSelectionColumn(dataRow)}
-        />
-    );
-
-    const handleCheckSelectionColumn = (empresa: Empresa) => {
+    const handleCheckSelectionColumn = (empresa: Empresa): void => {
         const rest: Empresa[] = values.data.map((item: Empresa) => {
             if (item.NIF === empresa.NIF) {
                 return { ...empresa, selected: !empresa.selected, disabled: !empresa.disabled };
@@ -77,6 +69,13 @@ export const EmpresaTablaScene: React.FC<EmpresaTablasProps> = props => {
         selectedRow(rest.find((item: Empresa) => item.selected === true), title);
     };
 
+    const selectionCheckBoxColumn = (dataRow: Empresa) => (
+        <Checkbox
+            checked={dataRow.selected}
+            disabled={dataRow.disabled && !dataRow.selected}
+            onChange={e => handleCheckSelectionColumn(dataRow)}
+        />
+    );
     interface TableState {
         columns: Column<Empresa>[];
         data: Empresa[];

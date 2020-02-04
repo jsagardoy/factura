@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,32 +15,35 @@ import { formValidationDetalle } from 'common-app/validations';
 interface FacturaFormProps {
     detalle: Detalle;
     isDisabledOKFactura: boolean;
-    handleInputChange: (id: string, value: any) => void;
+    handleInputChange: (id: string, value: string | number) => void;
     submitDetalle: (detalle: Detalle) => void;
     composeDetalleList: (detalle: Detalle) => void;
     showNewItem: () => void;
+    clearDetalle: () => void;
 }
 export const AddDetallesFacturaForm: React.FC<FacturaFormProps> = props => {
-    const { handleInputChange, submitDetalle, composeDetalleList, detalle, showNewItem, isDisabledOKFactura } = props;
+    const { handleInputChange, submitDetalle, composeDetalleList, detalle, showNewItem, clearDetalle } = props;
     const [disableOK, setDisabledOK] = React.useState(true);
-    React.useEffect(() => {
-        isDisabledOK();
-    }, [detalle]);
-    const isDisabledOK = () => {
+
+    const isDisabledOK = (): void => {
         if (detalle) {
             formValidationDetalle.validateForm(detalle).then(validationResult => {
-                setDisabledOK(!(validationResult.succeeded && isDisabledOKFactura));
+                setDisabledOK(!validationResult.succeeded);
             });
         } else {
             setDisabledOK(true);
         }
     };
+
+    React.useEffect(() => {
+        isDisabledOK();
+    }, [detalle]);
     return (
         <List dense={true}>
             <ListItem>
                 <ListItemText>
                     <TextField
-                        onChange={e => handleInputChange(e.target.id, +e.target.value)}
+                        onChange={e => handleInputChange(e.target.id, e.target.value)}
                         autoFocus
                         required
                         margin="dense"
@@ -75,6 +80,7 @@ export const AddDetallesFacturaForm: React.FC<FacturaFormProps> = props => {
                             showNewItem();
                             submitDetalle(detalle);
                             composeDetalleList(detalle);
+                            clearDetalle();
                         }}
                     >
                         <SaveIcon />

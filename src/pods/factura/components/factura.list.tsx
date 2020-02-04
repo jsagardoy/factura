@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
@@ -17,27 +18,31 @@ interface PropsDetalle {
     isDisabledOKFactura: boolean;
     submitDetalle: (detalle: Detalle) => void;
     composeDetalleList: (detalle: Detalle) => void;
+    deleteDetalle: (index: number) => void;
 }
 export const ListaDetalles: React.FC<PropsDetalle> = props => {
-    const { submitDetalle, detalleList, composeDetalleList, isDisabledOKFactura } = props;
+    const { submitDetalle, detalleList, composeDetalleList, isDisabledOKFactura, deleteDetalle } = props;
     const [detalle, setDetalle] = React.useState<Detalle>();
     const [showAdd, setShowAdd] = React.useState<boolean>(false);
 
-    const handleInputChange = (id: string, value: any) => {
+    const handleInputChange = (id: string, value: any): void => {
         setDetalle({ ...detalle, [id]: value });
     };
+    const clearDetalle = (): void => {
+        const newDetalle: Detalle = null;
+        setDetalle(newDetalle);
+    };
+    const showNewItem = (): void => setShowAdd(!showAdd);
 
-    const showNewItem = () => setShowAdd(!showAdd);
-
-    const ShowList = () => (
+    const ShowList = (): any => (
         <List dense={true}>
-            {detalleList.map(element => (
+            {detalleList.map((element, index) => (
                 <ListItem key={element.elemento}>
                     <ListItemText primary={element.elemento} />
                     <ListItemText primary={element.cantidad} />
                     <ListItemText primary={element.precio} />
                     <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="Eliminar">
+                        <IconButton edge="end" aria-label="Eliminar" onClick={e => deleteDetalle(index)}>
                             <DeleteIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
@@ -60,6 +65,7 @@ export const ListaDetalles: React.FC<PropsDetalle> = props => {
                     composeDetalleList={composeDetalleList}
                     showNewItem={showNewItem}
                     isDisabledOKFactura={isDisabledOKFactura}
+                    clearDetalle={clearDetalle}
                 />
             ) : (
                 <p>No hay elementos añadidos</p>

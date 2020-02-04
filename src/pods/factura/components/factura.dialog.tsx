@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,7 +11,7 @@ import { FacturaForm } from './factura.form';
 interface FacturaFormProps {
     disabled: boolean;
     disabledOK: boolean;
-    handleInputChange: <T>(fieldName: String, value: T) => void;
+    handleInputChange: <T>(fieldName: string, value: T) => void;
     handleInputSave: () => void;
     cleanForm: () => void;
     submitDetalle: (detalle) => void;
@@ -21,11 +21,11 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
     const [open, setOpen] = React.useState(false);
     const { handleInputChange, disabled, handleInputSave, disabledOK, cleanForm, submitDetalle } = props;
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (): void => {
         setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleClose = (): void => {
         setOpen(false);
     };
 

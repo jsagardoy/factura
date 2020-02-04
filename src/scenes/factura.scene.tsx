@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { FacturaFormDialog } from 'pods/factura';
 import { Empresa, Factura } from '@core';
@@ -10,7 +11,7 @@ interface FacturaProps {
     disabledOK: boolean;
     facturaList: Factura[];
     facturasAño: number[];
-    handleInputChange: <T>(fieldName: String, value: T) => void;
+    handleInputChange: <T>(fieldName: string, value: T) => void;
     handleInputSave: () => void;
     cleanForm: () => void;
     submitDetalle: (detalle) => void;

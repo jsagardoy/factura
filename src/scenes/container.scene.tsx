@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { AppLayout } from '@layout';
 import { EmpresaTablaScene, FacturaScene } from '@scenes';
 import { emisoresData, receptoresData, Empresa, Factura, Detalle } from '@core';
 import { formValidation } from 'common-app/validations';
-import { totalmem } from 'os';
 
 interface MainContainerProps {}
 
@@ -16,16 +18,6 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const [disabledOK, setDisabledOK] = React.useState<boolean>(false);
     const [facturasList, setFacturasList] = React.useState<Factura[]>([]);
     //TO BE CHANGED, JUST FOR TESTING PURPOSE
-    React.useEffect(() => {
-        isDisabled();
-    });
-    React.useEffect(() => {
-        isDisabledOK();
-    }, [factura]);
-
-    React.useEffect(() => {
-        calculateYears();
-    }, [facturasList]);
 
     const calculateYears = () =>
         facturasList.map((factura: Factura) => {
@@ -33,7 +25,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 setFacturasAño([...facturasAño, factura.año]);
             }
         });
-    const selectedRow = (dataRow: Empresa, actionType: string) => {
+    const selectedRow = (dataRow: Empresa, actionType: string): void => {
         switch (actionType) {
             case 'Emisor':
                 setEmisor(dataRow);
@@ -43,7 +35,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 break;
         }
     };
-    const handleInputChange = <T extends any>(id: any, value: T) => {
+    const handleInputChange = <T extends any>(id: any, value: T): void => {
         setFactura({ ...factura, [id]: value });
     };
     const submitDetalle = detalle => {
@@ -81,12 +73,6 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
             const lastFactura = facturasAnualesOredenadas[facturasAnualesOredenadas.length - 1];
             return lastFactura.id + 1;
         } else return 1;
-    };
-    const handleInputSave = () => {
-        const newFactura: Factura = fillFactura();
-        setFactura(newFactura);
-        const newFacturasList: Factura[] = [...facturasList, newFactura];
-        setFacturasList(newFacturasList);
     };
     const calculateIVA = (cuantia: number): number => {
         if (factura && cuantia && factura.porcentaje_iva) {
@@ -137,7 +123,22 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
             return newFactura;
         }
     };
+    const handleInputSave = () => {
+        const newFactura: Factura = fillFactura();
+        setFactura(newFactura);
+        const newFacturasList: Factura[] = [...facturasList, newFactura];
+        setFacturasList(newFacturasList);
+    };
+    React.useEffect(() => {
+        isDisabled();
+    });
+    React.useEffect(() => {
+        isDisabledOK();
+    }, [factura]);
 
+    React.useEffect(() => {
+        calculateYears();
+    }, [facturasList]);
     return (
         <AppLayout>
             <EmpresaTablaScene title="Emisor" data={emisoresData} selectedRow={selectedRow} />
