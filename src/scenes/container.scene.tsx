@@ -25,13 +25,16 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 setFacturasAño([...facturasAño, factura.año]);
             }
         });
-    const selectedRow = (dataRow: Empresa, actionType: string): void => {
+    const selectedRow = (dataRow: Empresa | Factura, actionType: string): void => {
         switch (actionType) {
             case 'Emisor':
-                setEmisor(dataRow);
+                setEmisor(dataRow as Empresa);
                 break;
             case 'Receptor':
-                setReceptor(dataRow);
+                setReceptor(dataRow as Empresa);
+                break;
+            case 'Factura':
+                setFactura(dataRow as Factura);
                 break;
         }
     };
@@ -154,6 +157,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 facturaList={facturasList}
                 facturasAño={facturasAño}
                 submitDetalle={submitDetalle}
+                selectedRow={selectedRow}
             />
         </AppLayout>
     );

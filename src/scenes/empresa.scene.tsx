@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { Empresa } from '@core';
 import { Column } from 'material-table';

@@ -13,6 +13,7 @@ export interface Empresa {
 }
 export interface Factura {
     id: number;
+    selected: boolean;
     concepto: string;
     porcentaje_iva: number;
     porcentaje_irpf: number;

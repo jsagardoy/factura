@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import MaterialTable, { Column } from 'material-table';
-import { positions } from '@material-ui/system';
-import { Tooltip } from '@material-ui/core';
+
 interface TableProps {
     columns: Array<Column<any>>;
     data: any[];
