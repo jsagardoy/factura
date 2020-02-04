@@ -4,7 +4,7 @@ import { Factura } from '@core';
 import * as jsPDFAutotable from 'jspdf-autotable';
 
 export const jsPdfGenerator = (factura: Factura) => {
-    var doc = new jsPDF();
+    const doc = new jsPDF();
     doc.setFont('times');
     doc.setFontType('Normal');
     doc.setFontSize(10);

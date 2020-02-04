@@ -13,11 +13,11 @@ export const FacturaForm: React.FC<FacturaFormProps> = props => {
     const { handleInputChange, submitDetalle, isDisabledOKFactura } = props;
     const [detalleList, setDetalleList] = React.useState<Detalle[]>([]);
 
-    const deleteDetalle = (index:number): void => {
+    const deleteDetalle = (index: number): void => {
         const newDetalleList: Detalle[] = [...detalleList];
         newDetalleList.splice(index, index + 1);
         setDetalleList(newDetalleList);
-    }
+    };
     const composeDetalleList = (detalle: Detalle): void => {
         const newDetalleList: Detalle[] = [...detalleList];
         newDetalleList.push(detalle);
