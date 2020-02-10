@@ -42,7 +42,7 @@ export const FacturaTable: React.FC<FacturaTablasProps> = props => {
             }
         });
         setValues({ ...values, data: rest });
-        selectedRow(rest.find((item: Factura) => item.selected === true), title);
+        selectedRow(rest.find((item: Factura) => item.selected === true), 'Factura');
     };
 
     const selectionCheckBoxColumn = (dataRow: Factura) => (

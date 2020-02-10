@@ -11,6 +11,7 @@ interface FacturaProps {
     disabledOK: boolean;
     facturaList: Factura[];
     facturasAño: number[];
+    disabledFactura: boolean;
     handleInputChange: <T>(fieldName: string, value: T) => void;
     handleInputSave: () => void;
     cleanForm: () => void;
@@ -29,7 +30,9 @@ export const FacturaScene: React.FC<FacturaProps> = props => {
         facturasAño,
         submitDetalle,
         selectedRow,
+        disabledFactura,
     } = props;
+
     const getYearData = (year: number): Factura[] => {
         const newArray = facturaList.filter((factura: Factura) => factura.año === year);
         return newArray;
@@ -45,6 +48,7 @@ export const FacturaScene: React.FC<FacturaProps> = props => {
                     handleInputChange={handleInputChange}
                     handleInputSave={handleInputSave}
                     submitDetalle={submitDetalle}
+                    disabledFactura={disabledFactura}
                 />
             </div>
             {facturasAño.map((año: number) => (

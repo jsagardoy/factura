@@ -11,6 +11,7 @@ import { FacturaForm } from './factura.form';
 interface FacturaFormProps {
     disabled: boolean;
     disabledOK: boolean;
+    disabledFactura: boolean;
     handleInputChange: <T>(fieldName: string, value: T) => void;
     handleInputSave: () => void;
     cleanForm: () => void;
@@ -19,7 +20,15 @@ interface FacturaFormProps {
 
 export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
     const [open, setOpen] = React.useState(false);
-    const { handleInputChange, disabled, handleInputSave, disabledOK, cleanForm, submitDetalle } = props;
+    const {
+        handleInputChange,
+        disabled,
+        handleInputSave,
+        disabledOK,
+        cleanForm,
+        submitDetalle,
+        disabledFactura,
+    } = props;
 
     const handleClickOpen = (): void => {
         setOpen(true);
@@ -33,6 +42,9 @@ export const FacturaFormDialog: React.FC<FacturaFormProps> = props => {
         <div>
             <Button disabled={disabled} variant="outlined" color="primary" onClick={handleClickOpen}>
                 Nueva factura
+            </Button>
+            <Button disabled={!disabledFactura} variant="outlined" color="primary" onClick={handleClickOpen}>
+                Generar Factura
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Nueva factura</DialogTitle>

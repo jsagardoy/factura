@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import TextField from '@material-ui/core/TextField';

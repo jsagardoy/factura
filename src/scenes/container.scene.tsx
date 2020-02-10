@@ -17,14 +17,14 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const [facturasAño, setFacturasAño] = React.useState<number[]>([]);
     const [disabledOK, setDisabledOK] = React.useState<boolean>(false);
     const [facturasList, setFacturasList] = React.useState<Factura[]>([]);
+    const [disabledFactura, setDisabledFactura] = React.useState(true);
     //TO BE CHANGED, JUST FOR TESTING PURPOSE
-
-    const calculateYears = () =>
-        facturasList.map((factura: Factura) => {
-            if (!facturasAño.includes(factura.año)) {
-                setFacturasAño([...facturasAño, factura.año]);
-            }
-        });
+    const handleFacturaList = (factura: Factura): void => {
+        const newFacturasList: Factura[] = [...facturasList];
+        const index = facturasList.findIndex(elem => elem.año === factura.año && elem.id === factura.id);
+        newFacturasList.splice(index, 1, factura);
+        setFacturasList(newFacturasList);
+    };
     const selectedRow = (dataRow: Empresa | Factura, actionType: string): void => {
         switch (actionType) {
             case 'Emisor':
@@ -35,9 +35,16 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 break;
             case 'Factura':
                 setFactura(dataRow as Factura);
+                handleFacturaList(dataRow as Factura);
                 break;
         }
     };
+    const calculateYears = () =>
+        facturasList.map((factura: Factura) => {
+            if (!facturasAño.includes(factura.año)) {
+                setFacturasAño([...facturasAño, factura.año]);
+            }
+        });
     const handleInputChange = <T extends any>(id: any, value: T): void => {
         setFactura({ ...factura, [id]: value });
     };
@@ -113,7 +120,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const fillFactura = (): Factura => {
         if (factura) {
             const facturaWithDetails = calculateDetalle(factura);
-            const newFactura: Factura = {
+            let newFactura: Factura = {
                 ...factura,
                 emisor: emisor,
                 receptor: receptor,
@@ -123,6 +130,9 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 irpf: calculateIRPF(facturaWithDetails.cuantia),
                 total: calculateTotal(facturaWithDetails.cuantia),
             };
+            if (!newFactura.selected) {
+                newFactura = { ...newFactura, selected: false };
+            }
             return newFactura;
         }
     };
@@ -132,11 +142,21 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
         const newFacturasList: Factura[] = [...facturasList, newFactura];
         setFacturasList(newFacturasList);
     };
+    const isFacturaChecked = (): boolean => {
+        const factura: Factura = facturasList.find((factura: Factura) => factura.selected === true);
+        return factura ? true : false;
+    };
+
+    const handleDisabledFactura = (): void => {
+        const resp: boolean = isFacturaChecked();
+        setDisabledFactura(resp);
+    };
     React.useEffect(() => {
         isDisabled();
     });
     React.useEffect(() => {
         isDisabledOK();
+        handleDisabledFactura();
     }, [factura]);
 
     React.useEffect(() => {
@@ -158,6 +178,7 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
                 facturasAño={facturasAño}
                 submitDetalle={submitDetalle}
                 selectedRow={selectedRow}
+                disabledFactura={disabledFactura}
             />
         </AppLayout>
     );
