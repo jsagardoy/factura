@@ -22,8 +22,10 @@ export const MainContainer: React.FC<MainContainerProps> = props => {
     const handleFacturaList = (factura: Factura): void => {
         const newFacturasList: Factura[] = [...facturasList];
         const index = facturasList.findIndex(elem => elem.año === factura.año && elem.id === factura.id);
-        newFacturasList.splice(index, 1, factura);
-        setFacturasList(newFacturasList);
+        if (index !== -1) {
+            newFacturasList.splice(index, 1, factura);
+            setFacturasList(newFacturasList);
+        }
     };
     const selectedRow = (dataRow: Empresa | Factura, actionType: string): void => {
         switch (actionType) {
